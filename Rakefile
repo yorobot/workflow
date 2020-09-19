@@ -56,7 +56,7 @@ DATASETS = {
 }
 
 ##  used by json export/generate task
-FOOTBALL_JSON_DIR = "#{OPENFOOTBALL_DIR}/football.json"
+## FOOTBALL_JSON_DIR = "./football.json"
 
 
 
