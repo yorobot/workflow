@@ -52,6 +52,7 @@ jobs:
       run: |
         rake
         rake clone
+        rake build
 
     - name: List all files
       run: |
