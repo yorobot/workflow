@@ -74,6 +74,7 @@ directory BUILD_DIR
 
 task :build => BUILD_DIR  do
   SportDb.connect( DB_CONFIG )
+  SportDb.create_all
 
   logger = LogUtils::Logger.root
 
@@ -84,7 +85,6 @@ task :build => BUILD_DIR  do
   ## use DEBUG=t or DEBUG=f
   logger.level =  :debug     # :info
 
-  SportDb.create_all
 
   latest = ['2018/19', '2019',
   '2019/20', '2020',
