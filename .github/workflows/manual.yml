@@ -39,7 +39,7 @@ jobs:
     - name: Run ruby script
       run: |
         ruby -e "puts 'Hello, World!'"
-        ruby -e "puts %Q{Dir.pwd: >#{Dir.pwd}<}"
+        ruby -e "puts %Q{Dir.pwd: >#{Dir.pwd}<}"   # => /home/runner/work/workflow/workflow
         ruby -e "p $:"
 
     - name: Run bundle install
