@@ -39,14 +39,20 @@ jobs:
     - name: Run ruby script
       run: |
         ruby -e "puts 'Hello, World!'"
+        ruby -e "puts %Q{Dir.pwd: >#{Dir.pwd}<}"
         ruby -e "p $:"
-        ruby -e "puts #{Dir.pwd}"
 
     - name: Run bundle install
       run: |
         bundle install
+        gem list
+        gem env
 
     - name: Run rakefile tasks
       run: |
         rake
         rake clone
+
+    - name: List all files
+      run: |
+        ls -lR
