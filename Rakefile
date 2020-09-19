@@ -7,3 +7,7 @@ task :hello do
   puts Git.status
   puts Git.changes
 end
+
+task :clone do
+  Git.clone( 'https://github.com/openfootball/mexico.git' )
+end
