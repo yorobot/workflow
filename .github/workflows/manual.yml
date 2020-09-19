@@ -38,5 +38,5 @@ jobs:
 
     - name: Run ruby script
       run: |
-        ruby -e "Hello, World!"
+        ruby -e "puts 'Hello, World!'"
         ruby -e "p $:"
