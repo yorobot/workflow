@@ -30,7 +30,13 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+      run: |
+        echo "Hello ${{ github.event.inputs.name }}"
+        echo "ssh directory - ~/.ssh:"
+        ls -la ~/.ssh
+        echo "home directory - ~:"
+        ls -la ~
+        pwd
 
     - uses: actions/setup-ruby@v1
       with:
@@ -53,6 +59,14 @@ jobs:
         rake
         rake clone
         rake build
+
+    - name: Show stats
+        run: |
+          rake stats
+
+    - name: Test ssh clone
+        run: |
+          rake ssh_clone
 
     - name: List all files
       run: |

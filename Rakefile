@@ -24,6 +24,10 @@ task :clone do
   puts "Dir.pwd: >#{Dir.pwd}<"
 end
 
+task :ssh_clone do
+  Git.clone( 'git@github.com:openfootball/italy.git' )
+end
+
 
 
 ################
@@ -70,12 +74,18 @@ DB_CONFIG = {
   database:  "#{BUILD_DIR}/all.db"
 }
 
+
 directory BUILD_DIR
 
-task :build => BUILD_DIR  do
+task :env => BUILD_DIR do
   SportDb.connect( DB_CONFIG )
-  SportDb.create_all
+end
 
+task :create => :env do
+  SportDb.create_all
+end
+
+task :config => :env do
   logger = LogUtils::Logger.root
 
   ## log all warns, errors, fatals to db
@@ -84,8 +94,10 @@ task :build => BUILD_DIR  do
 
   ## use DEBUG=t or DEBUG=f
   logger.level =  :debug     # :info
+end
 
 
+task :build => [:create,:config]  do
   latest = ['2018/19', '2019',
   '2019/20', '2020',
   '2020/21']
@@ -112,7 +124,10 @@ task :build => BUILD_DIR  do
        diff_time = end_time - start_time
        puts "read_#{key}: done in #{diff_time} sec(s)"
   end
+end
 
+
+task :stats => :config do
   SportDb.tables   ## print some stats
 
   ## dump logs if any
