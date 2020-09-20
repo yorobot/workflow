@@ -30,14 +30,14 @@ jobs:
       run: |
         echo "Hello ${{ github.event.inputs.name }}"
         uname -a
-        whoami
+        whoami                      ## e.g. runner
         echo "ssh directory - ~/.ssh:"
         # ls -la ~/.ssh
         echo "home directory - ~:"
         ls -la ~
         pwd
         echo "${GITHUB_ACTOR}"       ## e.g. yorobot
-        echo "${GITHUB_WORKSPACE}"   ## e.g. ??
+        echo "${GITHUB_WORKSPACE}"   ## e.g. /home/runner/work/workflow/workflow
         echo "work directory - ~/work:"
         ls -la ~/work
         echo "work/workflow directory - ~/work/workflow:"
@@ -53,7 +53,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         echo "ssh directory - ~/.ssh:"
         ls -la ~/.ssh
-        ssh -vT git@github.com
+      #  ssh -vT git@github.com
 
     - name: setup/check git
       run: |
@@ -93,14 +93,11 @@ jobs:
 #      run: |
 #        rake stats
 
-#    - name: Test ssh clone
-#      run: |
-#        rake ssh_clone
+    - name: Test ssh clone
+      run: |
+        rake ssh_clone
 
     - name: List all files
       run: |
         ls -lR
-
-    - name: Test ssh connect
-      run: |
 

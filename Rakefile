@@ -25,6 +25,7 @@ task :clone do
 end
 
 task :ssh_clone do
+  Git.clone( 'git@github.com:yorobot/workflow.json.git' )
   Git.clone( 'git@github.com:openfootball/italy.git' )
 end
 
