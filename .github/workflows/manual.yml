@@ -33,10 +33,11 @@ jobs:
       run: |
         echo "Hello ${{ github.event.inputs.name }}"
         echo "ssh directory - ~/.ssh:"
-        ls -la ~/.ssh
+        # ls -la ~/.ssh
         echo "home directory - ~:"
         ls -la ~
         pwd
+        echo "${GITHUB_ACTOR}"
 
     - uses: actions/setup-ruby@v1
       with:
