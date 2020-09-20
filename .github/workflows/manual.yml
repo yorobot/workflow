@@ -38,8 +38,8 @@ jobs:
         echo "${GITHUB_ACTOR}"     ## e.g. yorobot
         echo "work directory - ~/work:"
         ls -la ~/work
-        echo "work/workspace directory - ~/work/workspace:"
-        ls -la ~/work/workspace
+        echo "work/workflow directory - ~/work/workflow:"
+        ls -la ~/work/workflow
         git --version
         git config -l --global --show-origin
 
