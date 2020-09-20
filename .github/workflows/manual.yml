@@ -40,9 +40,14 @@ jobs:
         ls -la ~/work
         echo "work/workflow directory - ~/work/workflow:"
         ls -Rla ~/work/workflow
+
+    - name: setup/check git
+      run: |
         git --version
         git config -l --show-origin
-    #  git config -l --global --show-origin
+        git config --global user.name  "Yo Robot"
+        git config --global user.email "gerald.bauer+yorobot@gmail.com"
+        git config -l --global --show-origin
     #=> fatal: unable to read config file '/home/runner/.gitconfig': No such file or directory
     #=> [error]Process completed with exit code 128.
 
@@ -87,28 +92,3 @@ jobs:
       run: |
         ssh -vT git@github.com
 
-#  Run ssh -vT git@github.com
-#  ssh -vT git@github.com
-#  shell: /bin/bash -e {0}
-#debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-#debug1: Server host key: ssh-rsa SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8
-#debug1: Host 'github.com' is known and matches the RSA host key.
-#debug1: Found key in /etc/ssh/ssh_known_hosts:1
-#Warning: Permanently added the RSA host key for IP address '140.82.114.4' to the list of known hosts.
-#debug1: rekey after 134217728 blocks
-#debug1: SSH2_MSG_NEWKEYS sent
-#debug1: expecting SSH2_MSG_NEWKEYS
-#debug1: SSH2_MSG_NEWKEYS received
-#debug1: rekey after 134217728 blocks
-#debug1: SSH2_MSG_EXT_INFO received
-#debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-dss-cert-v01@openssh.com,ssh-ed25519,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ssh-dss>
-#debug1: SSH2_MSG_SERVICE_ACCEPT received
-#debug1: Authentications that can continue: publickey
-#debug1: Next authentication method: publickey
-#debug1: Trying private key: /home/runner/.ssh/id_rsa
-#debug1: Trying private key: /home/runner/.ssh/id_dsa
-#debug1: Trying private key: /home/runner/.ssh/id_ecdsa
-#debug1: Trying private key: /home/runner/.ssh/id_ed25519
-#debug1: No more authentication methods to try.
-#git@github.com: Permission denied (publickey).
-##[error]Process completed with exit code 255.
