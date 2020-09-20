@@ -61,12 +61,12 @@ jobs:
         rake build
 
     - name: Show stats
-        run: |
-          rake stats
+      run: |
+        rake stats
 
     - name: Test ssh clone
-        run: |
-          rake ssh_clone
+      run: |
+        rake ssh_clone
 
     - name: List all files
       run: |
