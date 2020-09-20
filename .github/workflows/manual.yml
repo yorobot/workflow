@@ -41,7 +41,10 @@ jobs:
         echo "work/workflow directory - ~/work/workflow:"
         ls -la ~/work/workflow
         git --version
-        git config -l --global --show-origin
+        git config -l --show-origin
+    #  git config -l --global --show-origin
+    #=> fatal: unable to read config file '/home/runner/.gitconfig': No such file or directory
+    #=> [error]Process completed with exit code 128.
 
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
