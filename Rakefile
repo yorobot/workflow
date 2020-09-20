@@ -24,11 +24,30 @@ task :clone do
   puts "Dir.pwd: >#{Dir.pwd}<"
 end
 
+
+
 task :ssh_clone do
   Git.clone( 'git@github.com:yorobot/workflow.json.git' )
   Git.clone( 'git@github.com:openfootball/italy.git' )
 end
 
+
+task :ssh_push do
+  File.open( "./workflow.json/test#{Time.now.to_i}.txt", 'w:utf-8' ) do |f|
+     f.write( "hello\n" )
+     f.write( "hola\n" )
+  end
+
+  msg  = "auto-update week #{Date.today.cweek}"
+
+  GitProject.open( './workflow.json' ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
+end
 
 
 ################

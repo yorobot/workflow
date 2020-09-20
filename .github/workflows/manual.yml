@@ -96,6 +96,7 @@ jobs:
     - name: Test ssh clone
       run: |
         rake ssh_clone
+        rake ssh_push
 
     - name: List all files
       run: |

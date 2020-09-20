@@ -13,17 +13,15 @@ Linux fv-az68 5.4.0-1025-azure #25~18.04.1-Ubuntu SMP Sat Sep 5 15:28:57 UTC 202
 
 
 git
+
 ```
 $ git --version
 git version 2.28.0
 
 $ git config --global user.name  "Yo Robot"
 $ git config --global user.email "gerald.bauer+yorobot@gmail.com"
+
 $ git config -l --global --show-origin
-file:/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
-file:/etc/gitconfig	filter.lfs.process=git-lfs filter-process
-file:/etc/gitconfig	filter.lfs.required=true
-file:/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
 file:/home/runner/.gitconfig	user.name=Yo Robot
 file:/home/runner/.gitconfig	user.email=gerald.bauer+yorobot@gmail.com
 ```
