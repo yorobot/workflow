@@ -25,19 +25,26 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
     # Runs a single command using the runners shell
     - name: Send greeting
       run: |
         echo "Hello ${{ github.event.inputs.name }}"
+        uname -a
         echo "ssh directory - ~/.ssh:"
         # ls -la ~/.ssh
         echo "home directory - ~:"
         ls -la ~
         pwd
-        echo "${GITHUB_ACTOR}"
+        echo "${GITHUB_ACTOR}"     ## e.g. yorobot
+        echo "work directory - ~/work:"
+        ls -la ~/work
+        echo "work/workspace directory - ~/work/workspace:"
+        ls -la ~/work/workspace
+        git --version
+        git config -l --global --show-origin
+
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
 
     - uses: actions/setup-ruby@v1
       with:
@@ -55,20 +62,24 @@ jobs:
         gem list
         gem env
 
-    - name: Run rakefile tasks
-      run: |
-        rake
-        rake clone
-        rake build
+#    - name: Run rakefile tasks
+#      run: |
+#        rake
+#        rake clone
+#        rake build
 
-    - name: Show stats
-      run: |
-        rake stats
+#    - name: Show stats
+#      run: |
+#        rake stats
 
-    - name: Test ssh clone
-      run: |
-        rake ssh_clone
+#    - name: Test ssh clone
+#      run: |
+#        rake ssh_clone
 
     - name: List all files
       run: |
         ls -lR
+
+    - name: Test ssh connect
+      run: |
+        ssh -vT git@github.com
