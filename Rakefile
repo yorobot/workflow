@@ -1,53 +1,9 @@
 require "gitti"
+
 require "sportdb/readers"
+require "sportdb/exporters"
 
 
-task default: %w[hello]
-
-task :hello do
-  puts Git.version
-  puts Git.status
-  puts Git.changes
-end
-
-task :clone do
-  Git.clone( 'https://github.com/openfootball/mexico.git' )
-  Git.clone( 'https://github.com/openfootball/france.git' )
-  puts "Dir.pwd: >#{Dir.pwd}<"
-
-  GitProject.open( './mexico' ) do |proj|
-    proj.status
-    proj.changes
-    proj.files
-  end
-
-  puts "Dir.pwd: >#{Dir.pwd}<"
-end
-
-
-
-task :ssh_clone do
-  Git.clone( 'git@github.com:yorobot/workflow.json.git' )
-  Git.clone( 'git@github.com:openfootball/italy.git' )
-end
-
-
-task :ssh_push do
-  File.open( "./workflow.json/test#{Time.now.to_i}.txt", 'w:utf-8' ) do |f|
-     f.write( "hello\n" )
-     f.write( "hola\n" )
-  end
-
-  msg  = "auto-update week #{Date.today.cweek}"
-
-  GitProject.open( './workflow.json' ) do |proj|
-    if proj.changes?
-      proj.add( '.' )
-      proj.commit( msg )
-      proj.push
-    end
-  end
-end
 
 
 ################
@@ -69,7 +25,7 @@ DATASETS = {
 #             de:    { path: DE_DIR },
 #             en:    { path: EN_DIR },
 #             es:    { path: ES_DIR },
-#             it:    { path: IT_DIR },
+             it:    { path: IT_DIR },
              fr:    { path: FR_DIR },
 #             world: { path: WORLD_DIR },
 
@@ -79,8 +35,6 @@ DATASETS = {
 #             europe_cl:  { path: EUROPE_CL_DIR },
 }
 
-##  used by json export/generate task
-## FOOTBALL_JSON_DIR = "./football.json"
 
 
 
@@ -117,21 +71,21 @@ task :config => :env do
 end
 
 
-task :build => [:create,:config]  do
+task :build => [:create, :config] do
   latest = ['2018/19', '2019',
-  '2019/20', '2020',
-  '2020/21']
+            '2019/20', '2020',
+            '2020/21']
   ## for all start with 2010/11 season for now
   all    = ['2010/11',
-  '2011/12',
-  '2012/13',
-  '2013/14',
-  '2014/15',
-  '2015/16',
-  '2016/17',
-  '2017/18',
-  '2018/19', '2019',
-  '2019/20', '2020']
+            '2011/12',
+            '2012/13',
+            '2013/14',
+            '2014/15',
+            '2015/16',
+            '2016/17',
+            '2017/18',
+            '2018/19', '2019',
+            '2019/20', '2020']
 
   DATASETS.each do |key,h|
        start_time = Time.now   ## todo: use Timer? t = Timer.start / stop / diff etc. - why? why not?
@@ -156,3 +110,115 @@ task :stats => :config do
     puts "  [#{log.level}] #{log.ts}  - #{log.msg}"
   end
 end
+
+
+
+##  used by json export/generate task
+# FOOTBALL_JSON_DIR = "./workflow.json"
+FOOTBALL_JSON_DIR = "./football.json"
+
+
+task :ssh_push do
+  msg  = "auto-update week #{Date.today.cweek}"
+
+  GitProject.open( FOOTBALL_JSON_DIR ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
+end
+
+task :ssh_clone do
+  #############
+  ### "deep" standard/ regular clone
+  [
+    # 'yorobot/workflow.json',
+    'openfootball/football.json',
+  ].each do |repo|
+    Git.clone( "git@github.com:#{repo}.git" )
+  end
+
+  ###################
+  ### shallow "fast" clone (no commit/push possible); use depth 1
+  [
+    'openfootball/italy',
+    'openfootball/france',
+    'openfootball/mexico',
+  ].each do |repo|
+    Git.clone( "git@github.com:#{repo}.git", depth: 1 )
+  end
+end
+
+
+task :json => :config  do       ## for in-memory depends on all for now - ok??
+  [
+    'at.1',
+    'at.2',
+    'at.cup',
+
+    'de.1',
+    'de.2',
+    'de.3',
+    'de.cup',
+
+    'eng.1',
+    'eng.2',
+    'eng.3',
+    'eng.4',
+
+    'es.1',
+    'es.2',
+
+    'it.1',
+    'it.2',
+
+    'fr.1',
+    'fr.2',
+
+    'ru.1',
+    'ru.2',
+
+    ## from world/ datasets
+    'nl.1',  # Netherlands
+    'be.1',  # Belgium
+    'pt.1',  # Portugal
+
+    'ch.1',  # Switzerland
+    'ch.2',
+
+    'cz.1',  # Czech Republic
+    'hu.1',  # Hungary
+    'gr.1',  # Greece
+
+    'tr.1',  # Turkey
+    'tr.2',
+
+    'sco.1', # Scotland
+    'ar.1',  # Argentina
+    'cn.1',  # China
+    'jp.1',  # Japan
+    'au.1',  # Australia
+
+    ###################
+    ## more
+    'mx.1',
+    'br.1',
+
+    #########
+    ## clubs int'l  (incl. group/group phase)
+    'uefa.cl.quali',
+    'uefa.cl',
+  ].each do |league|
+    SportDb::JsonExporter.export( league, out_root: FOOTBALL_JSON_DIR )
+  end
+end
+
+
+
+
+
+
+
+
