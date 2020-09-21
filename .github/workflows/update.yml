@@ -3,10 +3,12 @@ name: Update datasets workflow
 
 on:
   schedule:
-    # * is a special character in YAML so you have to quote this string
+    # note: * is a special character in YAML so you have to quote this string
     #  see cron guru for more examples / help on syntax
     #    ->  https://crontab.guru/examples.html
-    - cron:  '0 11 * * *'       #  every day at 11 am (utc?)
+    - cron:  '0 6 * * *'       #  every day at 6 am (utc?)
+  workflow_dispatch:
+    ### for testing / debugging allow "manual" start
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel

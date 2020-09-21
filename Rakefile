@@ -21,7 +21,7 @@ EUROPE_CL_DIR = "./europe-champions-league"
 
 DATASETS = {
              at:    { path: AT_DIR }, ## domestic clubs
-             de:    { path: DE_DIR },
+#             de:    { path: DE_DIR },
              en:    { path: EN_DIR },
              es:    { path: ES_DIR },
              it:    { path: IT_DIR },
@@ -143,7 +143,7 @@ task :ssh_clone do
   ### shallow "fast" clone (no commit/push possible); use depth 1
   [
     'openfootball/austria',
-    'openfootball/deutschland',
+#    'openfootball/deutschland',
     'openfootball/england',
     'openfootball/espana',
     'openfootball/italy',
