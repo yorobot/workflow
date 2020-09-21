@@ -5,7 +5,6 @@ require "sportdb/exporters"
 
 
 
-
 ################
 # club country repos
 AT_DIR        = "./austria"
@@ -21,10 +20,10 @@ MX_DIR        = "./mexico"
 EUROPE_CL_DIR = "./europe-champions-league"
 
 DATASETS = {
-#             at:    { path: AT_DIR }, ## domestic clubs
-#             de:    { path: DE_DIR },
-#             en:    { path: EN_DIR },
-#             es:    { path: ES_DIR },
+             at:    { path: AT_DIR }, ## domestic clubs
+             de:    { path: DE_DIR },
+             en:    { path: EN_DIR },
+             es:    { path: ES_DIR },
              it:    { path: IT_DIR },
              fr:    { path: FR_DIR },
 #             world: { path: WORLD_DIR },
@@ -143,6 +142,10 @@ task :ssh_clone do
   ###################
   ### shallow "fast" clone (no commit/push possible); use depth 1
   [
+    'openfootball/austria',
+    'openfootball/deutschland',
+    'openfootball/england',
+    'openfootball/espana',
     'openfootball/italy',
     'openfootball/france',
     'openfootball/mexico',
