@@ -112,7 +112,7 @@ SportDb::Model::Event.order( :id ).each do |event|
             end
 
   basename = event.league.key
-  season = Season.new( event.season.key )
+  season = Season.parse( event.season.key )
   season_path = season.to_path( :archive )  ## e.g. 2010s/2010-11
 
   ## path = "./o/#{season_path}/#{basename}.csv"
