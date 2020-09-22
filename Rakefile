@@ -1,7 +1,12 @@
 require "gitti"
 
+
 require "sportdb/readers"
 require "sportdb/exporters"
+
+
+require_relative "./mirror"
+
 
 
 
@@ -21,7 +26,7 @@ EUROPE_CL_DIR = "./europe-champions-league"
 
 DATASETS = {
              at:    { path: AT_DIR }, ## domestic clubs
-#             de:    { path: DE_DIR },
+             de:    { path: DE_DIR },
              en:    { path: EN_DIR },
              es:    { path: ES_DIR },
              it:    { path: IT_DIR },
@@ -68,6 +73,9 @@ task :config => :env do
   ## use DEBUG=t or DEBUG=f
   logger.level =  :debug     # :info
 end
+
+
+
 
 
 task :build => [:create, :config] do
@@ -127,7 +135,22 @@ task :ssh_push do
       proj.push
     end
   end
+
+  [
+    'england',
+    'deutschland',
+    'espana',
+  ].each do |name|
+    GitProject.open( "./#{name}.csv" ) do |proj|
+      if proj.changes?
+        proj.add( '.' )
+        proj.commit( msg )
+        proj.push
+      end
+    end
+  end
 end
+
 
 task :ssh_clone do
   #############
@@ -142,16 +165,36 @@ task :ssh_clone do
   ###################
   ### shallow "fast" clone (no commit/push possible); use depth 1
   [
-    'openfootball/austria',
-#    'openfootball/deutschland',
-    'openfootball/england',
-    'openfootball/espana',
-    'openfootball/italy',
-    'openfootball/france',
-    'openfootball/mexico',
-  ].each do |repo|
-    Git.clone( "git@github.com:#{repo}.git", depth: 1 )
+    'england',
+    'deutschland',
+    'espana',
+    'italy',
+    'france',
+    'austria',
+    'mexico',
+  ].each do |name|
+    Git.clone( "git@github.com:openfootball/#{name}.git", depth: 1 )
   end
+
+  #############
+  ### "deep" standard/ regular clone for csv datasets
+  [
+    'england',
+    'deutschland',
+    'espana',
+  ].each do |name|
+    Git.clone( "git@github.com:footballcsv/#{name}.git", "#{name}.csv" )
+  end
+end
+
+
+
+task :mirror => :config do
+  mirror( league: 'eng', reponame: 'england' )
+  mirror( league: 'de',  reponame: 'deutschland' )
+  mirror( league: 'es',  reponame: 'espana' )
+
+  ## mirror( league: 'at', reponame: 'austria' )
 end
 
 

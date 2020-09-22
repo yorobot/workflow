@@ -63,6 +63,9 @@ jobs:
     - name: Run gen json
       run:  rake json
 
+    - name: Run gen csv
+      run:  rake mirror
+
     - name: Run ssh_push
       run:  rake ssh_push
 
