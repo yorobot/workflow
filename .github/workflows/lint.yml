@@ -1,12 +1,12 @@
 
-name: Update datasets workflow
+name: Lint datasets workflow
 
 on:
   schedule:
     # note: * is a special character in YAML so you have to quote this string
     #  see cron guru for more examples / help on syntax
     #    ->  https://crontab.guru/examples.html
-    - cron:  '0 6 * * *'       #  every day at 6 am (utc?)
+    - cron:  '0 5 * * *'       #  every day at 5 am (utc?)
   workflow_dispatch:
     ### for testing / debugging allow "manual" start
 
@@ -54,21 +54,9 @@ jobs:
     - name: Run ssh_clone
       run:  rake ssh_clone
 
-    - name: Run build (database)
-      run:  rake build
-
-    - name: Show stats
-      run:  rake stats
-
-    - name: Run gen json
-      run:  rake json
-
-    - name: Run gen csv
-      run:  rake mirror
+    - name: Run lint
+      run:  rake lint
 
     - name: Run ssh_push
-      run:  |
-        rake ssh_push_json
-        rake ssh_push_csv
-        rake ssh_push_logs
+      run:  rake ssh_push_logs
 

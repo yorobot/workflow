@@ -4,11 +4,15 @@ require "gitti"
 require "sportdb/readers"
 require "sportdb/exporters"
 
-
-require_relative "./mirror"
+$LOAD_PATH.unshift( File.expand_path( "./sport.db.more/sportdb-linters/lib" ))
+require 'sportdb/linters'
 
 
 require_relative "./config"
+
+
+require_relative "./mirror"
+require_relative "./lint"
 
 
 
@@ -93,13 +97,29 @@ task :stats => :config do
 end
 
 
+task :lint do
+  lint
+end
+
+
 
 ##  used by json export/generate task
 # FOOTBALL_JSON_DIR = "./workflow.json"
 FOOTBALL_JSON_DIR = "./football.json"
 
+task :ssh_push_logs do
+  msg  = "auto-update week #{Date.today.cweek}"
+  ## todo/fix: rename to logs or something why? why not?
+  GitProject.open( './workflow.json' ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
+end
 
-task :ssh_push do
+task :ssh_push_json do
   msg  = "auto-update week #{Date.today.cweek}"
 
   GitProject.open( FOOTBALL_JSON_DIR ) do |proj|
@@ -109,6 +129,10 @@ task :ssh_push do
       proj.push
     end
   end
+end
+
+task :ssh_push_csv do
+  msg  = "auto-update week #{Date.today.cweek}"
 
   [
     'england',
@@ -130,14 +154,25 @@ task :ssh_clone do
   #############
   ### "deep" standard/ regular clone
   [
-    # 'yorobot/workflow.json',
+    'yorobot/workflow.json',
     'openfootball/football.json',
   ].each do |repo|
     Git.clone( "git@github.com:#{repo}.git" )
   end
 
+  ######
+  ### shallow "fast clone" - support libraries
+  ###  use https:// instead of ssh - why? why not?
+  [
+    'yorobot/sport.db.more',
+  ].each do |repo|
+    Git.clone( "git@github.com:#{repo}.git", depth: 1 )
+  end
+
+
   ###################
   ### shallow "fast" clone (no commit/push possible); use depth 1
+  ###  use https:// instead of ssh - why? why not?
   [
     'england',
     'deutschland',

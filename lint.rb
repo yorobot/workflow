@@ -1,9 +1,4 @@
 
-$LOAD_PATH.unshift( File.expand_path( "./sport.db.more/sportdb-auto/lib" ))
-
-## note: MUST require linters AFTER changing leagues_dir/clubs_dir etc.
-require 'sportdb/linters'
-
 
 
 def print_errors( errors )
@@ -18,50 +13,47 @@ def print_errors( errors )
 end
 
 
-if ARGV.size > 0
+def lint
+  errors_by_dataset = []
 
-  dataset = datasets[ ARGV[0] ]
+  DATASETS.each do |key,h|
+    path   = h[:path]
 
-  path   = dataset[0]
-  kwargs = dataset[1] || {}
+    kwargs = {}
+    kwargs[:mods] = h[:mods]  if h[:mods]
 
-  buf, errors = SportDb::PackageLinter.lint( path, **kwargs )
-  puts buf
-  puts
-  print_errors( errors )
+    buf, errors = SportDb::PackageLinter.lint( path, **kwargs )
+    puts buf
+    puts
+    print_errors( errors )
 
-## save
-# out_path = "#{path}/.build/conf.txt"
-out_path = "./tmp/#{ARGV[0]}.conf.txt"
-File.open( out_path , 'w:utf-8' ) do |f|
- f.write( buf )
-end
+    errors_by_dataset << [File.basename(path), errors]
 
-else    ## check all
-errors_by_dataset = []
+    ## save
+    # out_path = "#{path}/.build/conf.txt"
+    out_path = "./workflow.json/#{key}.conf.txt"
+    File.open( out_path , 'w:utf-8' ) do |f|
+      f.write( buf )
+    end
+  end
 
-datasets.values.each do |dataset|
-  path   = dataset[0]
-  kwargs = dataset[1] || {}
+  total_errors = 0
+  errors_by_dataset.each do |rec|
+    dataset = rec[0]
+    errors  = rec[1]
 
-  buf, errors = SportDb::PackageLinter.lint( path, **kwargs )
-  puts buf
+    total_errors += errors.size
 
-  errors_by_dataset << [File.basename(path), errors]
-end
+    puts
+    puts "==== #{dataset} ===="
 
+    print_errors( errors )
+  end
 
-errors_by_dataset.each do |rec|
-  dataset = rec[0]
-  errors  = rec[1]
-
-  puts
-  puts "==== #{dataset} ===="
-
-  print_errors( errors )
-end
-end
-
-puts "bye"
-
+  ## note: let's stop processing pipeline if any errors found!!!
+  if total_errors > 0
+    puts "#{total_errors} error(s) total; please fix"
+    exit 1
+  end
+end  ## method lint
 
