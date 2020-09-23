@@ -24,7 +24,7 @@ def ssh_clone
   end
 
 
-  names = DATASETS.map { |h| File.basename(h[:path]) }
+  names = DATASETS.map { |key,h| File.basename(h[:path]) }
   # e.g. like [
   #  'england',
   #  'deutschland',
