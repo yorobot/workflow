@@ -1,6 +1,3 @@
-require "gitti"
-
-
 require "sportdb/readers"
 require "sportdb/exporters"
 
@@ -105,55 +102,6 @@ task :lint do
 end
 
 
-
-##  used by json export/generate task
-# FOOTBALL_JSON_DIR = "./workflow.json"
-FOOTBALL_JSON_DIR = "./football.json"
-
-task :ssh_push_logs do
-  msg  = "auto-update week #{Date.today.cweek}"
-  ## todo/fix: rename to logs or something why? why not?
-  GitProject.open( './workflow.json' ) do |proj|
-    if proj.changes?
-      proj.add( '.' )
-      proj.commit( msg )
-      proj.push
-    end
-  end
-end
-
-task :ssh_push_json do
-  msg  = "auto-update week #{Date.today.cweek}"
-
-  GitProject.open( FOOTBALL_JSON_DIR ) do |proj|
-    if proj.changes?
-      proj.add( '.' )
-      proj.commit( msg )
-      proj.push
-    end
-  end
-end
-
-task :ssh_push_csv do
-  msg  = "auto-update week #{Date.today.cweek}"
-
-  [
-    'england',
-    'deutschland',
-    'espana',
-  ].each do |name|
-    GitProject.open( "./#{name}.csv" ) do |proj|
-      if proj.changes?
-        proj.add( '.' )
-        proj.commit( msg )
-        proj.push
-      end
-    end
-  end
-end
-
-
-
 task :mirror => :config do
   mirror( league: 'eng', reponame: 'england' )
   mirror( league: 'de',  reponame: 'deutschland' )
@@ -164,6 +112,10 @@ task :mirror => :config do
   puts "mirror done"
 end
 
+
+##  used by json export/generate task
+# FOOTBALL_JSON_DIR = "./workflow.json"
+# FOOTBALL_JSON_DIR =  "./football.json"
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
   [
@@ -224,7 +176,7 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
     'uefa.cl.quali',
     'uefa.cl',
   ].each do |league|
-    SportDb::JsonExporter.export( league, out_root: FOOTBALL_JSON_DIR )
+    SportDb::JsonExporter.export( league, out_root: './football.json' )
   end
 end
 

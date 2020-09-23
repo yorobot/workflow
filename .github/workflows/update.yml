@@ -67,8 +67,5 @@ jobs:
       run:  rake mirror
 
     - name: Run ssh_push
-      run:  |
-        rake ssh_push_json
-        rake ssh_push_csv
-        rake ssh_push_logs
+      run:  ruby ./push.rb   ## json, csv & logs
 

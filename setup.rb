@@ -48,4 +48,8 @@ def ssh_clone
 end
 
 
-ssh_clone()
+
+if $PROGRAM_NAME == __FILE__
+  ssh_clone()
+end
+

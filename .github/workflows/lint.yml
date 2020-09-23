@@ -58,5 +58,5 @@ jobs:
       run:  rake lint
 
     - name: Run ssh_push
-      run:  rake ssh_push_logs
+      run:  ruby ./push.rb logs
 
