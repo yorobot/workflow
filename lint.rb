@@ -1,16 +1,19 @@
 
 
 
-def print_errors( errors )
+def build_errors( errors )  ## rename to format errors - why? why not?
+  buf = String.new( '' )
   if errors.size > 0
-    puts "#{errors.size} error(s) / warn(s):"
+    buf << "#{errors.size} error(s) / warn(s):\n"
     errors.each do |error|
-      puts "!! ERROR: #{error}"
+      buf << "!! ERROR: #{error}\n"
     end
   else
-    puts "#{errors.size} errors / warns"
+    buf << "#{errors.size} errors / warns\n"
   end
+  buf
 end
+
 
 
 def lint
@@ -25,7 +28,7 @@ def lint
     buf, errors = SportDb::PackageLinter.lint( path, **kwargs )
     puts buf
     puts
-    print_errors( errors )
+    puts build_errors( errors )
 
     errors_by_dataset << [File.basename(path), errors]
 
@@ -37,6 +40,7 @@ def lint
     end
   end
 
+  buf = String.new( '' )
   total_errors = 0
   errors_by_dataset.each do |rec|
     dataset = rec[0]
@@ -44,16 +48,28 @@ def lint
 
     total_errors += errors.size
 
-    puts
-    puts "==== #{dataset} ===="
+    buf << "\n"
+    buf << "==== #{dataset} ====\n"
 
-    print_errors( errors )
+    buf << build_errors( errors )
   end
+  puts buf
+
 
   ## note: let's stop processing pipeline if any errors found!!!
+  ##    note save errros for now in all.conf.txt
+  out_path = "./workflow.json/all.conf.txt"
   if total_errors > 0
     puts "#{total_errors} error(s) total; please fix"
-    exit 1
+
+    File.open( out_path , 'w:utf-8' ) do |f|
+      f.write( buf )
+    end
+    ## exit 1
+  else
+    File.open( out_path , 'w:utf-8' ) do |f|
+      f.write( "OK\n" )
+    end
   end
 end  ## method lint
 
