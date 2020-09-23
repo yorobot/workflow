@@ -1,5 +1,8 @@
 require "gitti"
 
+require_relative "./config"
+
+
 
 def ssh_clone
   #############
@@ -21,17 +24,26 @@ def ssh_clone
   end
 
 
+  names = DATASETS.map { |h| File.basename(h[:path]) }
+  # e.g. like [
+  #  'england',
+  #  'deutschland',
+  #  'espana',
+  #  'italy',
+  #  'france',
+  #  'austria',
+  #  'mexico']
+  pp names
+
   ###################
   ### shallow "fast" clone (no commit/push possible); use depth 1
   ###  use https:// instead of ssh - why? why not?
+  ###    no need for commits - just read-only ok
+  names +
   [
-    'england',
-    'deutschland',
-    'espana',
-    'italy',
-    'france',
-    'austria',
-    'mexico',
+    ## add basic setup too
+    'leagues',
+    'clubs',
   ].each do |name|
     Git.clone( "git@github.com:openfootball/#{name}.git", depth: 1 )
   end

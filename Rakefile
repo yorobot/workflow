@@ -1,6 +1,12 @@
 require "sportdb/readers"
 require "sportdb/exporters"
 
+## use (switch to) latest "external" datasets
+SportDb::Import.config.leagues_dir = "./leagues"
+SportDb::Import.config.clubs_dir   = "./clubs"
+
+
+
 #####################
 ### note: for now setup lint machinery "on demand"
 ###
@@ -51,29 +57,13 @@ end
 
 
 
-
 task :build => [:create, :config] do
-  latest = ['2018/19', '2019',
-            '2019/20', '2020',
-            '2020/21']
-  ## for all start with 2010/11 season for now
-  all    = ['2010/11',
-            '2011/12',
-            '2012/13',
-            '2013/14',
-            '2014/15',
-            '2015/16',
-            '2016/17',
-            '2017/18',
-            '2018/19', '2019',
-            '2019/20', '2020']
-
   DATASETS.each do |key,h|
        start_time = Time.now   ## todo: use Timer? t = Timer.start / stop / diff etc. - why? why not?
 
        ## SportDb.read( h[:path] )
        ## note: only incl. latest season for now
-       SportDb.read( h[:path], season: latest )
+       SportDb.read( h[:path], season: SEASON_LATEST )
 
        end_time = Time.now
        diff_time = end_time - start_time

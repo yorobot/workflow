@@ -1,12 +1,33 @@
 
-
-## champions league mods
+###################
+## mods
+## -- champions league mods
 MODS = {
 'Arsenal   | Arsenal FC'    => 'Arsenal, ENG',
 'Liverpool | Liverpool FC'  => 'Liverpool, ENG',
 'Barcelona'                 => 'Barcelona, ESP',
 'Valencia'                  => 'Valencia, ESP'
 }
+
+
+##########################
+## seasons
+SEASON_LATEST = ['2018/19', '2019',
+                 '2019/20', '2020',
+                 '2020/21']
+
+## for all start with 2010/11 season for now
+SEASON_ALL    = ['2010/11',
+                 '2011/12',
+                 '2012/13',
+                 '2013/14',
+                 '2014/15',
+                 '2015/16',
+                 '2016/17',
+                 '2017/18',
+                 '2018/19', '2019',
+                 '2019/20', '2020']
+
 
 
 ################
@@ -41,4 +62,13 @@ DATASETS = {
             ## note: reserve cl for country code for Chile!! - why? why not?
 #             europe_cl:  { path: EUROPE_CL_DIR, mods: MODS },
 }
+
+
+###
+# todo/check: rename to/use MIRRORS instead - why? why not?
+DATASETS_CSV = {
+
+}
+
+
 
