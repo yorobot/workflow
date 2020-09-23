@@ -1,5 +1,5 @@
 
-name: Lint datasets workflow
+name: Lint datasets
 
 on:
   schedule:
@@ -51,8 +51,8 @@ jobs:
         gem list
         gem env
 
-    - name: Run ssh_clone
-      run:  rake ssh_clone
+    - name: Run setup / ssh_clone
+      run:  ruby ./setup.rb
 
     - name: Run lint
       run:  rake lint
