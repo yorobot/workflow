@@ -39,12 +39,11 @@ def ssh_clone
   ### shallow "fast" clone (no commit/push possible); use depth 1
   ###  use https:// instead of ssh - why? why not?
   ###    no need for commits - just read-only ok
-  names +
-  [
-    ## add basic setup too
-    'leagues',
-    'clubs',
-  ].each do |name|
+  names += [ ## add basic setup too
+            'leagues',
+            'clubs',
+           ]
+  names.each do |name|
     Git.clone( "git@github.com:openfootball/#{name}.git", depth: 1 )
   end
 
