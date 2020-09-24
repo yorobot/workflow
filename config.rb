@@ -58,11 +58,12 @@ DATASETS_CSV = {
   de:         { path: './deutschland' },
   eng:        { path: './england' },
   es:         { path: './espana' },
+  be:         { path: './belgium' },
 
-  ## add
+  mx:         { path: './mexico' },
+
+  ## add more
   ## - world
-  ## - mexico
-  ## - belgium
   ## - ...
 }
 

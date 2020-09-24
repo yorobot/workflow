@@ -27,9 +27,6 @@ def lint
     kwargs[:mods] = h[:mods]  if h[:mods]
 
     buf, errors = SportDb::PackageLinter.lint( path, **kwargs )
-    puts buf
-    puts
-    puts build_errors( errors )
 
     total_errors += errors.size
 

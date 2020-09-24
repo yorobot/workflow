@@ -98,7 +98,9 @@ task :mirror => :config do
   mirror( league: 'de',  reponame: 'deutschland' )
   mirror( league: 'es',  reponame: 'espana' )
   mirror( league: 'at',  reponame: 'austria' )
+  mirror( league: 'be',  reponame: 'belgium')
 
+  mirror( league: 'mx',  reponame: 'mexico')
   puts "mirror done"
 end
 
