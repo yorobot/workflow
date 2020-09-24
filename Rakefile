@@ -1,4 +1,6 @@
 require "sportdb/readers"
+
+$LOAD_PATH.unshift( File.expand_path( "./sport.db.more/sportdb-exporters/lib" ))
 require "sportdb/exporters"
 
 ## use (switch to) latest "external" datasets
@@ -8,8 +10,7 @@ SportDb::Import.config.clubs_dir   = "./clubs"
 
 
 #####################
-### note: for now setup lint machinery "on demand"
-###
+## note: for now setup lint machinery "on demand"
 $LOAD_PATH.unshift( File.expand_path( "./sport.db.more/sportdb-linters/lib" ))
 require 'sportdb/linters'
 
@@ -96,15 +97,13 @@ task :mirror => :config do
   mirror( league: 'eng', reponame: 'england' )
   mirror( league: 'de',  reponame: 'deutschland' )
   mirror( league: 'es',  reponame: 'espana' )
-
-  ## mirror( league: 'at', reponame: 'austria' )
+  mirror( league: 'at',  reponame: 'austria' )
 
   puts "mirror done"
 end
 
 
 ##  used by json export/generate task
-# FOOTBALL_JSON_DIR = "./workflow.json"
 # FOOTBALL_JSON_DIR =  "./football.json"
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??

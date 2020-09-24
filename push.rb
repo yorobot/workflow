@@ -1,10 +1,13 @@
 require "gitti"
 
+require_relative "./config"
+
+
 
 def ssh_push_logs
   msg  = "auto-update week #{Date.today.cweek}"
   ## todo/fix: rename to logs or something why? why not?
-  GitProject.open( './workflow.json' ) do |proj|
+  GitProject.open( './logs' ) do |proj|
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
@@ -34,11 +37,14 @@ end
 def ssh_push_csv
   msg  = "auto-update week #{Date.today.cweek}"
 
-  [
-    'england',
-    'deutschland',
-    'espana',
-  ].each do |name|
+  names = DATASETS_CSV.map { |key,h| File.basename(h[:path]) }
+  # e.g.
+  # ['england',
+  #  'deutschland',
+  #  'espana']
+  pp names
+
+  names.each do |name|
     GitProject.open( "./#{name}.csv" ) do |proj|
       if proj.changes?
         proj.add( '.' )
@@ -48,6 +54,7 @@ def ssh_push_csv
     end
   end
 end
+
 
 
 

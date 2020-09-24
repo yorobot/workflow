@@ -8,7 +8,7 @@ def ssh_clone
   #############
   ### "deep" standard/ regular clone
   [
-    'yorobot/workflow.json',
+    'yorobot/logs',
     'openfootball/football.json',
   ].each do |repo|
     Git.clone( "git@github.com:#{repo}.git" )
@@ -47,16 +47,17 @@ def ssh_clone
     Git.clone( "git@github.com:openfootball/#{name}.git", depth: 1 )
   end
 
+
   #############
   ### "deep" standard/ regular clone for csv datasets
-  [
-    'england',
-    'deutschland',
-    'espana',
-  ].each do |name|
+  names = DATASETS_CSV.map { |key,h| File.basename(h[:path]) }
+  pp names
+
+  names.each do |name|
     Git.clone( "git@github.com:footballcsv/#{name}.git", "#{name}.csv" )
   end
 end
+
 
 
 

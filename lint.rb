@@ -39,7 +39,7 @@ def lint
 
     ## save
     # out_path = "#{path}/.build/conf.txt"
-    out_path = "./workflow.json/lint.#{key}.txt"
+    out_path = "./logs/lint.#{key}.txt"
     File.open( out_path , 'w:utf-8' ) do |f|
       f.write( buf )
     end
@@ -48,7 +48,7 @@ def lint
 
   puts total_buf
 
-  out_path = "./workflow.json/lint.all.txt"
+  out_path = "./logs/lint.all.txt"
   if total_errors > 0
     puts "#{total_errors} error(s) total; please fix"
 

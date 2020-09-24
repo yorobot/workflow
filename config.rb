@@ -29,45 +29,41 @@ SEASON_ALL    = ['2010/11',
                  '2019/20', '2020']
 
 
-
-################
-# club country repos
-AT_DIR        = "./austria"
-DE_DIR        = "./deutschland"
-EN_DIR        = "./england"
-ES_DIR        = "./espana"
-IT_DIR        = "./italy"
-FR_DIR        = "./france"
-WORLD_DIR     = "./world"   # incl. netherlands, portugal, switzerland, turkey, etc.
-
-BR_DIR        = "./brazil"
-MX_DIR        = "./mexico"
-EUROPE_CL_DIR = "./europe-champions-league"
-
-# euro     = "#{OPENFOOTBALL_DIR}/euro-cup"
-# worldcup = "#{OPENFOOTBALL_DIR}/world-cup"
-
+##########################
+## datasets
 
 DATASETS = {
-             at:    { path: AT_DIR }, ## domestic clubs
-             de:    { path: DE_DIR },
-             en:    { path: EN_DIR },
-             es:    { path: ES_DIR },
-             it:    { path: IT_DIR },
-             fr:    { path: FR_DIR },
-#             world: { path: WORLD_DIR },
+  at:         { path: './austria' }, ## domestic clubs
+  de:         { path: './deutschland' },
+  eng:        { path: './england' },
+  es:         { path: './espana' },
+  it:         { path: './italy' },
+  fr:         { path: './france' },
+  world:      { path: './world' }, # incl. netherlands, portugal, switzerland, turkey, etc.
 
-             mx:    { path: MX_DIR },
-#             br:    { path: BR_DIR },
-            ## note: reserve cl for country code for Chile!! - why? why not?
-#             europe_cl:  { path: EUROPE_CL_DIR, mods: MODS },
+  br:         { path: './brazil' },
+  mx:         { path: './mexico' },
+  ## note: reserve cl for country code for Chile!! - why? why not?
+  europe_cl:  { path: './europe-champions-league', mods: MODS },
+
+  euro:       { path: './euro-cup' },
+  worldcup:   { path: './world-cup' },
 }
 
 
 ###
 # todo/check: rename to/use MIRRORS instead - why? why not?
 DATASETS_CSV = {
+  at:         { path: './austria' },
+  de:         { path: './deutschland' },
+  eng:        { path: './england' },
+  es:         { path: './espana' },
 
+  ## add
+  ## - world
+  ## - mexico
+  ## - belgium
+  ## - ...
 }
 
 
