@@ -62,8 +62,11 @@ DATASETS_CSV = {
 
   mx:         { path: './mexico' },
 
+  world:      { path: './world' },
+
   ## add more
-  ## - world
+  ## - europe-champions-league
+  ## - major-soccer-league
   ## - ...
 }
 

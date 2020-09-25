@@ -94,6 +94,8 @@ end
 
 
 task :mirror => :config do
+  #########
+  ## country repos
   mirror( league: 'eng', reponame: 'england' )
   mirror( league: 'de',  reponame: 'deutschland' )
   mirror( league: 'es',  reponame: 'espana' )
@@ -101,6 +103,19 @@ task :mirror => :config do
   mirror( league: 'be',  reponame: 'belgium')
 
   mirror( league: 'mx',  reponame: 'mexico')
+
+  ########
+  ## all-in-one world
+  ['it',   # Italy
+   'fr',   # France
+   'nl',   # Netherlands
+   'sco',  # Scotland
+   'br',   # Brazil
+   'cn',   # China
+  ].each do |league|
+    mirror( league: league, reponame: 'world' )
+  end
+
   puts "mirror done"
 end
 

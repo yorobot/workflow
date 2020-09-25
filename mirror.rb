@@ -29,7 +29,9 @@ end # module Cache
 
 
 
-def mirror( league:, reponame: )  # e.g. league: 'eng', reponame: 'england'
+def mirror( league:, reponame: )
+   # e.g. league: 'eng',
+   #      reponame: 'england' or 'world'
 
 SportDb::Model::Event.order( :id ).each do |event|
 
