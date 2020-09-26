@@ -45,23 +45,23 @@ jobs:
         git config --global user.email "gerald.bauer+yorobot@gmail.com"
         git config -l --show-origin
 
-    - name: Run bundle install
+    - name: Run gem install
       run: |
-        bundle install
+        gem install gitti
         gem list
         gem env
 
     - name: Run setup / ssh_clone
-      run:  ruby ./stage/setup.rb
+      run:  ruby ./workflow/stage/setup.rb
 
     - name: Run download
       env:
         FOOTBALLDATA: ${{ secrets.FOOTBALLDATA }}
-      run:  ruby ./stage/download_2020.rb
+      run:  ruby ./workflow/stage/download_2020.rb
 
     - name: Run convert
-      run:  ruby ./stage/convert_2020.rb
+      run:  ruby ./workflow/stage/convert_2020.rb
 
     - name: Run ssh_push
-      run:  ruby ./stage/push.rb
+      run:  ruby ./workflow/stage/push.rb
 
