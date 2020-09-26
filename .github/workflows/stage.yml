@@ -48,6 +48,7 @@ jobs:
     - name: Run gem install
       run: |
         gem install gitti
+        gem install csvreader
         gem list
         gem env
 

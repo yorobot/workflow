@@ -5,10 +5,10 @@ require 'metal'
 ## up (ongoing) 2020 or 2020/21 seasons
 
 ### note: free trier has a 10 request/minute limit
-##  sleep/wait 10secs after every request (should result in ~6 requests/minute)
+##  sleep/wait 8secs after every request (should result in ~7-8 requests/minute)
 
 
-Footballdata.config.sleep = 10
+Footballdata.config.sleep = 8
 
 
 Footballdata.eng( 2020 )   ## note. includes Premier League & Championship
