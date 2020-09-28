@@ -50,6 +50,7 @@ jobs:
         gem install gitti
         gem install csvreader
         gem install nokogiri
+        gem install fetcher
         gem list
         gem env
 
