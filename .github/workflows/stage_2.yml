@@ -45,13 +45,11 @@ jobs:
         git config --global user.email "gerald.bauer+yorobot@gmail.com"
         git config -l --show-origin
 
-    - name: Run gem install
+    - name: Run bundle & gem install
+      ## note: try nokogiri (with c extensions first) install first
       run: |
-        gem install gitti
-        gem install csvreader
-        gem install nokogiri
-        gem install fetcher
-        gem install sportdb-catalogs
+        gem install nokogiri --no-rdoc --no-ri
+        bundle install
         gem list
         gem env
 

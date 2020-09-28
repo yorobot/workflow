@@ -47,8 +47,7 @@ jobs:
 
     - name: Run gem install
       run: |
-        gem install gitti
-        gem install csvreader
+        gem install gitti csvreader --no-rdoc --no-ri
         gem list
         gem env
 
