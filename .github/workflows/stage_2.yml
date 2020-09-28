@@ -48,7 +48,7 @@ jobs:
     - name: Run bundle & gem install
       ## note: try nokogiri (with c extensions first) install first
       run: |
-        gem install nokogiri --no-rdoc --no-ri
+        gem install nokogiri --no-document
         bundle install
         gem list
         gem env
