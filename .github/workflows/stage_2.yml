@@ -51,6 +51,7 @@ jobs:
         gem install csvreader
         gem install nokogiri
         gem install fetcher
+        gem install sportdb-catalogs
         gem list
         gem env
 
