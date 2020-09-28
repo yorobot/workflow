@@ -1,12 +1,12 @@
 
-name: Stage - Footballdata (2020) datasets
+name: Stage - Worldfootball (2020,2020/21) datasets
 
 on:
   schedule:
     # note: * is a special character in YAML so you have to quote this string
     #  see cron guru for more examples / help on syntax
     #    ->  https://crontab.guru/examples.html
-    - cron:  '0 4 * * FRI'       #  every Friday at 4 am (utc?)
+    - cron:  '0 4 * * TUE'       #  every Tuesday at 4 am (utc?)
   workflow_dispatch:
     ### for testing / debugging allow "manual" start
 
@@ -56,12 +56,10 @@ jobs:
       run:  ruby ./workflow/stage/setup.rb
 
     - name: Run download
-      env:
-        FOOTBALLDATA: ${{ secrets.FOOTBALLDATA }}
-      run:  ruby ./workflow/stage/download_2020.rb
+      run:  ruby ./workflow/stage/2_top_2020.rb download
 
     - name: Run convert
-      run:  ruby ./workflow/stage/convert_2020.rb
+      run:  ruby ./workflow/stage/2_top_2020.rb convert
 
     - name: Run ssh_push
       run:  ruby ./workflow/stage/push.rb
