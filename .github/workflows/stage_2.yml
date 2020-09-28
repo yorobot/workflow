@@ -49,6 +49,7 @@ jobs:
       run: |
         gem install gitti
         gem install csvreader
+        gem install nokogiri
         gem list
         gem env
 
