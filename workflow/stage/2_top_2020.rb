@@ -16,7 +16,6 @@ LEAGUES_YEAR = [
 LEAGUES = [    ## regular academic / season e.g. 2020/21
 'eng.1',        # starts Sat Sep 12
 'eng.2',        # starts Sat Sep 12
-=begin
 'eng.3',        # starts Sat Sep 12
 'eng.4',        # starts Sat Sep 12
 'eng.5',        # starts Sat Oct 3
@@ -41,7 +40,6 @@ LEAGUES = [    ## regular academic / season e.g. 2020/21
 'at.2',         # starts Fri Sep 11
 'at.3.o',       # starts Fri Aug 21
 'at.cup',       # starts Fri Aug 28
-=end
 
 'mx.1',         # starts Fri Jul 24
 ]
