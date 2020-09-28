@@ -7,5 +7,5 @@ gem "sportdb-readers"
 ## gem "sportdb-exporters"  - use "on-demand / lastest" github version for now
 
 
-
+gem "fetcher"  ## add for (HTTP) download support
 
