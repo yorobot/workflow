@@ -6,7 +6,8 @@ on:
     # note: * is a special character in YAML so you have to quote this string
     #  see cron guru for more examples / help on syntax
     #    ->  https://crontab.guru/examples.html
-    - cron:  '0 4 * * FRI'       #  every Friday at 4 am (utc?)
+#    - cron:  '0 4 * * FRI'       #  every Friday at 4 am (utc?)
+    - cron:  '0 3 * * TUE'       #  every Tuesday at 3 am (utc?)
   workflow_dispatch:
     ### for testing / debugging allow "manual" start
 
@@ -47,7 +48,7 @@ jobs:
 
     - name: Run gem install
       run: |
-        gem install webget gitti csvreader --no-document
+        bundle install
         gem list
         gem env
 
