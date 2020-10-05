@@ -54,20 +54,15 @@ pp LEAGUES_BY_SEASON
 
 
 
-Worldfootball.config.sleep = 3
-
-Worldfootball.config.cache.schedules_dir = './cache.weltfussball/dl'
-Worldfootball.config.cache.reports_dir   = './cache.weltfussball/dl2'
-
-Worldfootball.config.convert.out_dir     = './stage/two'
-
-
-
+Webget.config.sleep = 3
 
 def download
   tool = Worldfootball::Tool.new
   tool.download( LEAGUES_BY_SEASON )
 end
+
+
+Worldfootball.config.convert.out_dir     = './stage/two'
 
 def convert
   tool = Worldfootball::Tool.new

@@ -47,7 +47,7 @@ jobs:
 
     - name: Run gem install
       run: |
-        gem install gitti csvreader --no-document
+        gem install webget gitti csvreader --no-document
         gem list
         gem env
 
@@ -57,10 +57,10 @@ jobs:
     - name: Run download
       env:
         FOOTBALLDATA: ${{ secrets.FOOTBALLDATA }}
-      run:  ruby ./workflow/stage/1_download_2020.rb
+      run:  ruby ./workflow/stage/1_top_2020.rb download
 
     - name: Run convert
-      run:  ruby ./workflow/stage/1_convert_2020.rb
+      run:  ruby ./workflow/stage/1_top_2020.rb convert
 
     - name: Run ssh_push
       run:  ruby ./workflow/stage/push.rb
