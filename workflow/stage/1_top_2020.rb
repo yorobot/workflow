@@ -44,6 +44,7 @@ def download( datasets )
       Footballdata.schedule( league: league,
                              season: season )
     end
+  end
 end
 
 
@@ -57,6 +58,7 @@ def convert( datasets )
       Footballdata.convert( league: league,
                             season: season )
     end
+  end
 end
 
 
