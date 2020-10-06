@@ -33,21 +33,23 @@ SEASON_ALL    = ['2010/11',
 ## datasets
 
 DATASETS = {
-  at:         { path: './austria' }, ## domestic clubs
+  ## domestic clubs
+  at:         { path: './austria' },
   de:         { path: './deutschland' },
   eng:        { path: './england' },
   es:         { path: './espana' },
   it:         { path: './italy' },
-  fr:         { path: './france' },
-  world:      { path: './world' }, # incl. netherlands, portugal, switzerland, turkey, etc.
-
-  br:         { path: './brazil' },
-  mx:         { path: './mexico' },
+  europe:     { path: './europe' },   # incl. netherlands, portugal, switzerland, turkey, etc.
   ## note: reserve cl for country code for Chile!! - why? why not?
   europe_cl:  { path: './europe-champions-league', mods: MODS },
 
-  euro:       { path: './euro-cup' },
-  worldcup:   { path: './world-cup' },
+  mx:             { path: './mexico' },
+  south_america:  { path: './south_america' },
+  world:          { path: './world' },
+
+  ### national (selection) teams
+  euro:          { path: './euro-cup' },
+  worldcup:      { path: './world-cup' },
 }
 
 

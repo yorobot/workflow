@@ -125,33 +125,32 @@ end
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
   [
-    'at.1',
+    'at.1',  # Austria
     'at.2',
     'at.cup',
 
-    'de.1',
+    'de.1',  # Germany • Deutschland
     'de.2',
     'de.3',
     'de.cup',
 
-    'eng.1',
+    'eng.1',  # England
     'eng.2',
     'eng.3',
     'eng.4',
 
-    'es.1',
+    'es.1',  # Spain • España
     'es.2',
 
-    'it.1',
+    'it.1',  # Italy
     'it.2',
 
-    'fr.1',
+    ## from europe/ datasets
+    'fr.1',  # France
     'fr.2',
 
-    'ru.1',
-    'ru.2',
+    'sco.1', # Scotland
 
-    ## from world/ datasets
     'nl.1',  # Netherlands
     'be.1',  # Belgium
     'pt.1',  # Portugal
@@ -161,26 +160,31 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
 
     'cz.1',  # Czech Republic
     'hu.1',  # Hungary
-    'gr.1',  # Greece
 
+    'gr.1',  # Greece
     'tr.1',  # Turkey
     'tr.2',
 
-    'sco.1', # Scotland
+    'ru.1',  # Russia
+    'ru.2',
+
+    ## from south-america/ datasets
     'ar.1',  # Argentina
+    'br.1',  # Brazil
+
+    ## from world/ datasets
     'cn.1',  # China
     'jp.1',  # Japan
     'au.1',  # Australia
 
     ###################
     ## more
-    'mx.1',
-    'br.1',
+    'mx.1',  # Mexico
 
     #########
     ## clubs int'l  (incl. group/group phase)
-    'uefa.cl.quali',
-    'uefa.cl',
+    'uefa.cl.quali',   # Champions League Quali(fications)
+    'uefa.cl',         # Champions League
   ].each do |league|
     SportDb::JsonExporter.export( league, out_root: './football.json' )
   end
