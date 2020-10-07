@@ -44,7 +44,7 @@ DATASETS = {
   europe_cl:  { path: './europe-champions-league', mods: MODS },
 
   mx:             { path: './mexico' },
-  south_america:  { path: './south_america' },
+  south_america:  { path: './south-america' },
   world:          { path: './world' },
 
   ### national (selection) teams
