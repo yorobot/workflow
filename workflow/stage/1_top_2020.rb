@@ -1,5 +1,19 @@
-$LOAD_PATH.unshift( File.expand_path( "./cache.csv/apis/lib" ))
+puts "pwd: #{Dir.pwd}"
+## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
+Mono.root = Dir.pwd
+
+Mono.walk  ## for debugging print / walk mono (source) tree
+
+
+
+
+$LOAD_PATH.unshift( Mono.real_path( 'yorobot/cache.csv/apis/lib' ))
 require 'convert'
+
+## todo/check:
+## use a shortcut / something like - why? why not?
+##  Mono.load_path << 'yorobot/cache.csv/apis/lib'
+
 
 
 #############
@@ -36,22 +50,23 @@ pp DATASETS
 ## todo/fix: (re)use / move into
 ##     Footballdata::Tool.download( DATASETS ) !!!!
 ##    or Footballdata::Batch.download  or Job.download or ?????
-def download( datasets )
-  datasets.each do |dataset|
+step [:download, :dl] do
+  DATASETS.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
     seasons.each do |season|
-      Footballdata.schedule( league: league,
-                             season: season )
+        Footballdata.schedule( league: league,
+                               season: season )
     end
   end
 end
 
 
-Footballdata.config.convert.out_dir = './stage/one'
 
-def convert( datasets )
-  datasets.each do |dataset|
+Footballdata.config.convert.out_dir = Mono.real_path( 'yorobot/stage/one' )
+
+step :convert do
+  DATASETS.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
     seasons.each do |season|
@@ -60,26 +75,3 @@ def convert( datasets )
     end
   end
 end
-
-
-
-
-
-if $PROGRAM_NAME == __FILE__
-  if ARGV.size == 0
-    convert( DATASETS )
-  else
-    ARGV.each do |arg|
-      case arg
-      when 'dl', 'download'  then download( DATASETS )
-      when 'convert'         then convert( DATASETS )
-      else
-        puts "[top script] unknown argument >#{arg}<"
-        exit 1
-      end
-    end
-  end
-end
-
-
-puts "bye"

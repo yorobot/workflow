@@ -26,42 +26,22 @@ jobs:
       with:
         ruby-version: '2.6' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
 
-    - name: setup/check ssh
-      shell: bash
-      env:
-        SSH_KEY: ${{ secrets.SSH_KEY }}
-      run: |
-        if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
-        echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        echo "ssh directory - ~/.ssh:"
-        ls -la ~/.ssh
-      #  ssh -vT git@github.com
-
-    - name: setup/check git
-      run: |
-        git --version
-        git config --global user.name  "Yo Robot"
-        git config --global user.email "gerald.bauer+yorobot@gmail.com"
-        git config -l --show-origin
-
-    - name: Run bundle & gem install
+    - name: setup
       ## note: try nokogiri (with c extensions first) install first
       run: |
         gem install nokogiri --no-document
         bundle install
-        gem list
-        gem env
+        yo -f ./workflow/stage/setup.rb setup
 
     - name: Run setup / ssh_clone
-      run:  ruby ./workflow/stage/setup.rb
+      run:  yo -f ./workflow/stage/setup.rb clone
 
     - name: Run download
-      run:  ruby ./workflow/stage/2_top_2020.rb download
+      run:  yo -f ./workflow/stage/2_top_2020.rb download
 
     - name: Run convert
-      run:  ruby ./workflow/stage/2_top_2020.rb convert
+      run:  yo -f ./workflow/stage/2_top_2020.rb convert
 
     - name: Run ssh_push
-      run:  ruby ./workflow/stage/push.rb
+      run:  yo -f ./workflow/stage/setup.rb push
 

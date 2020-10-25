@@ -1,16 +1,22 @@
-require "gitti"
+
+puts "pwd: #{Dir.pwd}"
+## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
+Mono.root = Dir.pwd
+
+Mono.walk  ## for debugging print / walk mono (source) tree
 
 
 
-def ssh_clone
+step :clone do
   #############
   ### "deep" standard/ regular clone
   [
     'yorobot/logs',
     'yorobot/stage',
   ].each do |repo|
-    Git.clone( "git@github.com:#{repo}.git" )
+    Mono.clone( repo )
   end
+
 
   ######
   ### shallow "fast clone" - support libraries
@@ -18,14 +24,21 @@ def ssh_clone
   [
     'yorobot/cache.csv',
   ].each do |repo|
-    Git.clone( "git@github.com:#{repo}.git", depth: 1 )
+    ### todo/fix:   add back option -   depth: 1 !!!!!
+    Mono.clone( repo )  # depth: 1
   end
 end
 
 
 
+step :push do
+  msg = "auto-update week #{Date.today.cweek}"
 
-if $PROGRAM_NAME == __FILE__
-  ssh_clone()
+  Mono.open( 'yorobot/stage' ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
 end
-
