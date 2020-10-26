@@ -1,17 +1,25 @@
-require "gitti"
+puts "pwd: #{Dir.pwd}"
+## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
+Mono.root = Dir.pwd
 
-require_relative "./config"
+Mono.walk  ## for debugging print / walk mono (source) tree
 
 
 
-def ssh_clone
+require_relative './config'
+
+
+#############
+#  clone
+
+step :clone do
   #############
   ### "deep" standard/ regular clone
   [
     'yorobot/logs',
     'openfootball/football.json',
   ].each do |repo|
-    Git.clone( "git@github.com:#{repo}.git" )
+    Mono.clone( repo )
   end
 
   ######
@@ -20,11 +28,11 @@ def ssh_clone
   [
     'yorobot/sport.db.more',
   ].each do |repo|
-    Git.clone( "git@github.com:#{repo}.git", depth: 1 )
+    Mono.clone( repo, depth: 1 )
   end
 
 
-  names = DATASETS.map { |key,h| File.basename(h[:path]) }
+  names = DATASETS.map { |key,h| h[:name] }
   # e.g. like [
   #  'england',
   #  'deutschland',
@@ -44,24 +52,79 @@ def ssh_clone
             'clubs',
            ]
   names.each do |name|
-    Git.clone( "git@github.com:openfootball/#{name}.git", depth: 1 )
+    Mono.clone( "openfootball/#{name}", depth: 1 )
   end
 
 
   #############
   ### "deep" standard/ regular clone for csv datasets
-  names = DATASETS_CSV.map { |key,h| File.basename(h[:path]) }
+  names = DATASETS_CSV.map { |key,h| h[:name] }
   pp names
 
   names.each do |name|
-    Git.clone( "git@github.com:footballcsv/#{name}.git", "#{name}.csv" )
+    Mono.clone( "footballcsv/#{name}" )
   end
 end
 
 
 
+##################
+#  push
 
-if $PROGRAM_NAME == __FILE__
-  ssh_clone()
+step :push_logs do
+  msg  = "auto-update week #{Date.today.cweek}"
+  ## todo/fix: rename to logs or something why? why not?
+  GitProject.open( './logs' ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
+end
+
+
+##  used by json export/generate task
+# FOOTBALL_JSON_DIR = "./workflow.json"
+# FOOTBALL_JSON_DIR = "./football.json"
+
+step :push_json do
+  msg  = "auto-update week #{Date.today.cweek}"
+
+  GitProject.open( './football.json' ) do |proj|
+    if proj.changes?
+      proj.add( '.' )
+      proj.commit( msg )
+      proj.push
+    end
+  end
+end
+
+
+step :push_csv do
+  msg  = "auto-update week #{Date.today.cweek}"
+
+  names = DATASETS_CSV.map { |key,h| File.basename(h[:path]) }
+  # e.g.
+  # ['england',
+  #  'deutschland',
+  #  'espana']
+  pp names
+
+  names.each do |name|
+    GitProject.open( "./#{name}.csv" ) do |proj|
+      if proj.changes?
+        proj.add( '.' )
+        proj.commit( msg )
+        proj.push
+      end
+    end
+  end
+end
+
+step :push do
+  push_json
+  push_csv
+  push_logs
 end
 

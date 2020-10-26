@@ -29,42 +29,43 @@ SEASON_ALL    = ['2010/11',
                  '2019/20', '2020']
 
 
+
 ##########################
 ## datasets
 
 DATASETS = {
   ## domestic clubs
-  at:         { path: './austria' },
-  de:         { path: './deutschland' },
-  eng:        { path: './england' },
-  es:         { path: './espana' },
-  it:         { path: './italy' },
-  europe:     { path: './europe' },   # incl. netherlands, portugal, switzerland, turkey, etc.
+  at:             { name: 'austria' },
+  de:             { name: 'deutschland' },
+  eng:            { name: 'england' },
+  es:             { name: 'espana' },
+  it:             { name: 'italy' },
+  europe:         { name: 'europe' },   # incl. netherlands, portugal, switzerland, turkey, etc.
   ## note: reserve cl for country code for Chile!! - why? why not?
-  europe_cl:  { path: './europe-champions-league', mods: MODS },
+  europe_cl:      { name: 'europe-champions-league', mods: MODS },
 
-  mx:             { path: './mexico' },
-  south_america:  { path: './south-america' },
-  world:          { path: './world' },
+  mx:             { name: 'mexico' },
+  south_america:  { name: 'south-america' },
+  world:          { name: 'world' },
 
   ### national (selection) teams
-  euro:          { path: './euro-cup' },
-  worldcup:      { path: './world-cup' },
+  euro:           { name: 'euro-cup' },
+  worldcup:       { name: 'world-cup' },
 }
 
 
 ###
 # todo/check: rename to/use MIRRORS instead - why? why not?
 DATASETS_CSV = {
-  at:         { path: './austria' },
-  de:         { path: './deutschland' },
-  eng:        { path: './england' },
-  es:         { path: './espana' },
-  be:         { path: './belgium' },
+  at:         { name: 'austria' },
+  de:         { name: 'deutschland' },
+  eng:        { name: 'england' },
+  es:         { name: 'espana' },
+  be:         { name: 'belgium' },
 
-  mx:         { path: './mexico' },
+  mx:         { name: 'mexico' },
 
-  world:      { path: './world' },
+  world:      { name: 'world' },
 
   ## add more
   ## - europe-champions-league

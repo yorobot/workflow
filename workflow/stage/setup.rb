@@ -24,8 +24,7 @@ step :clone do
   [
     'yorobot/cache.csv',
   ].each do |repo|
-    ### todo/fix:   add back option -   depth: 1 !!!!!
-    Mono.clone( repo )  # depth: 1
+    Mono.clone( repo, depth: 1 )
   end
 end
 
