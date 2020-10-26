@@ -6,7 +6,7 @@ Mono.walk  ## for debugging print / walk mono (source) tree
 
 
 
-require_relative './config'
+## require_relative './config'
 
 
 #############
@@ -73,8 +73,7 @@ end
 
 step :push_logs do
   msg  = "auto-update week #{Date.today.cweek}"
-  ## todo/fix: rename to logs or something why? why not?
-  GitProject.open( './logs' ) do |proj|
+  Mono.open( 'yorobot/logs' ) do |proj|
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
@@ -84,14 +83,9 @@ step :push_logs do
 end
 
 
-##  used by json export/generate task
-# FOOTBALL_JSON_DIR = "./workflow.json"
-# FOOTBALL_JSON_DIR = "./football.json"
-
 step :push_json do
   msg  = "auto-update week #{Date.today.cweek}"
-
-  GitProject.open( './football.json' ) do |proj|
+  Mono.open( 'openfootball/football.json' ) do |proj|
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
@@ -103,8 +97,7 @@ end
 
 step :push_csv do
   msg  = "auto-update week #{Date.today.cweek}"
-
-  names = DATASETS_CSV.map { |key,h| File.basename(h[:path]) }
+  names = DATASETS_CSV.map { |key,h| h[:name] }
   # e.g.
   # ['england',
   #  'deutschland',
@@ -112,7 +105,7 @@ step :push_csv do
   pp names
 
   names.each do |name|
-    GitProject.open( "./#{name}.csv" ) do |proj|
+    Mono.open( "footballcsv/#{name}" ) do |proj|
       if proj.changes?
         proj.add( '.' )
         proj.commit( msg )
@@ -123,8 +116,27 @@ step :push_csv do
 end
 
 step :push do
-  push_json
-  push_csv
-  push_logs
+   step :push_json
+   step :push_csv
+   step :push_logs
+   ##
+   # or step_push_json
+   # or step_push_csv
+   # or step_push_logs
 end
 
+
+#################
+#  more
+
+step :lint do
+  ## note: CANNOT use (global) lint name,
+  ##   shadowed by local
+  ##  - use  _lint  or __lint__ or always step_lint _
+  ##    why? why not?
+  lint( DATASETS )
+end
+
+step :mirror do
+
+end
