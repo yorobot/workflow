@@ -88,36 +88,8 @@ task :stats => :config do
 end
 
 
-task :lint do
-  lint
-end
 
 
-task :mirror => :config do
-  #########
-  ## country repos
-  mirror( league: 'eng', reponame: 'england' )
-  mirror( league: 'de',  reponame: 'deutschland' )
-  mirror( league: 'es',  reponame: 'espana' )
-  mirror( league: 'at',  reponame: 'austria' )
-  mirror( league: 'be',  reponame: 'belgium')
-
-  mirror( league: 'mx',  reponame: 'mexico')
-
-  ########
-  ## all-in-one world
-  ['it',   # Italy
-   'fr',   # France
-   'nl',   # Netherlands
-   'sco',  # Scotland
-   'br',   # Brazil
-   'cn',   # China
-  ].each do |league|
-    mirror( league: league, reponame: 'world' )
-  end
-
-  puts "mirror done"
-end
 
 
 ##  used by json export/generate task

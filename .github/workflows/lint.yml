@@ -31,14 +31,14 @@ jobs:
         SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         bundle install
-        yo -f ./setup.rb setup
+        yo setup
 
-    - name: Run setup / ssh_clone
-      run:  yo -f ./setup.rb clone
+    - name: Run ssh_clone
+      run:  yo clone
 
     - name: Run lint
-      run:  rake lint
+      run:  yo -r ./boot.rb lint
 
     - name: Run ssh_push
-      run:  yo -f ./setup.rb push_logs
+      run:  yo push_logs
 

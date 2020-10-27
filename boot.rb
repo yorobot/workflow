@@ -13,24 +13,22 @@ end
 
 require "sportdb/readers"
 
-$LOAD_PATH.unshift( Mono.real_path( "yorobot/sport.db.more/sportdb-exporters/lib" ))
+$LOAD_PATH.unshift( Mono.real_path( "sportdb-exporters/lib@yorobot/sport.db.more" ))
 require "sportdb/exporters"
 
 ## use (switch to) latest "external" datasets
-SportDb::Import.config.leagues_dir = Mono.real_path( "openfootball/leagues" )
-SportDb::Import.config.clubs_dir   = Mono.real_path( "openfootball/clubs" )
+SportDb::Import.config.leagues_dir = Mono.real_path( "leagues@openfootball" )
+SportDb::Import.config.clubs_dir   = Mono.real_path( "clubs@openfootball" )
 
 
 
 #####################
 ## note: for now setup lint machinery "on demand"
-$LOAD_PATH.unshift( Mono.real_path( "yorobot/sport.db.more/sportdb-linters/lib" ))
+$LOAD_PATH.unshift( Mono.real_path( "sportdb-linters/lib@yorobot/sport.db.more" ))
 require 'sportdb/linters'
 
 
-## require_relative './config'
 
-## require_relative './mirror'
-require_relative './lint'
-
+require './mirror'
+require './lint'
 

@@ -1,30 +1,3 @@
-##
-##
-=begin
-rake:
--r, --require MODULE     Require MODULE before executing rakefile.
-ruby:
--rlibrary       require the library before executing your script
-=end
-
-
-
-## todo/fix: use a different name LintExtension or such - why? why not?
-## module LintHelper   ## todo/check: rename to/use sportdb helper or such - why? why not?
-##    wrap in module (or use global methods) - why? why not?
-##
-##  -r startup.rb or
-##     start.rb   or
-##     autoconf.rb or
-##     auto.rb or
-##     init.rb or
-##     profile.rb or
-##     lib.rb or
-##     boot.rb or
-##     helper.rb
-##     env.rb
-##     environment.rb
-##     ...
 
 
 
@@ -44,13 +17,13 @@ end
 
 
 
-def do_lint( datasets )
+def lint( datasets )
   total_errors = 0
   total_buf = String.new( '' )
 
   datasets.each do |key,h|
     name   = h[:name]
-    path   = "#{Mono.root}/openfootball/#{name}"
+    path   = Mono.real_path( "#{name}@openfootball" )
 
     kwargs = {}
     kwargs[:mods] = h[:mods]  if h[:mods]
@@ -65,7 +38,7 @@ def do_lint( datasets )
 
     ## save
     # out_path = "#{path}/.build/conf.txt"
-    out_path = "#{Mono.real_path('yorobot/logs')}/lint.#{key}.txt"
+    out_path = Mono.real_path( "lint.#{key}.txt@yorobot/logs" )
     File.open( out_path , 'w:utf-8' ) do |f|
       f.write( buf )
     end
@@ -74,7 +47,7 @@ def do_lint( datasets )
 
   puts total_buf
 
-  out_path = "#{Mono.real_path('yorobot/logs')}/lint.all.txt"
+  out_path = Mono.real_path( "lint.all.txt@yorobot/logs" )
   if total_errors > 0
     puts "#{total_errors} error(s) total; please fix"
 
@@ -89,5 +62,5 @@ def do_lint( datasets )
       f.write( "OK\n" )
     end
   end
-end  ## method do_lint
+end  ## method lint
 

@@ -1,12 +1,5 @@
-puts "pwd: #{Dir.pwd}"
-## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
-Mono.root = Dir.pwd
 
-Mono.walk  ## for debugging print / walk mono (source) tree
-
-
-
-## require_relative './config'
+require './config'
 
 
 #############
@@ -16,8 +9,8 @@ step :clone do
   #############
   ### "deep" standard/ regular clone
   [
-    'yorobot/logs',
-    'openfootball/football.json',
+             'logs@yorobot',
+    'football.json@openfootball',
   ].each do |repo|
     Mono.clone( repo )
   end
@@ -26,7 +19,7 @@ step :clone do
   ### shallow "fast clone" - support libraries
   ###  use https:// instead of ssh - why? why not?
   [
-    'yorobot/sport.db.more',
+    'sport.db.more@yorobot',
   ].each do |repo|
     Mono.clone( repo, depth: 1 )
   end
@@ -52,7 +45,7 @@ step :clone do
             'clubs',
            ]
   names.each do |name|
-    Mono.clone( "openfootball/#{name}", depth: 1 )
+    Mono.clone( "#{name}@openfootball", depth: 1 )
   end
 
 
@@ -62,7 +55,7 @@ step :clone do
   pp names
 
   names.each do |name|
-    Mono.clone( "footballcsv/#{name}" )
+    Mono.clone( "#{name}@footballcsv" )
   end
 end
 
@@ -73,7 +66,7 @@ end
 
 step :push_logs do
   msg  = "auto-update week #{Date.today.cweek}"
-  Mono.open( 'yorobot/logs' ) do |proj|
+  Mono.open( 'logs@yorobot' ) do |proj|
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
@@ -85,7 +78,7 @@ end
 
 step :push_json do
   msg  = "auto-update week #{Date.today.cweek}"
-  Mono.open( 'openfootball/football.json' ) do |proj|
+  Mono.open( 'football.json@openfootball' ) do |proj|
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
@@ -105,7 +98,7 @@ step :push_csv do
   pp names
 
   names.each do |name|
-    Mono.open( "footballcsv/#{name}" ) do |proj|
+    Mono.open( "#{name}@footballcsv" ) do |proj|
       if proj.changes?
         proj.add( '.' )
         proj.commit( msg )
@@ -126,17 +119,39 @@ step :push do
 end
 
 
+
 #################
 #  more
 
 step :lint do
-  ## note: CANNOT use (global) lint name,
-  ##   shadowed by local
-  ##  - use  _lint  or __lint__ or always step_lint _
-  ##    why? why not?
   lint( DATASETS )
 end
 
-step :mirror do
 
+step :mirror do
+  ##  was: task :mirror => :config
+
+  #########
+  ## country repos
+  mirror( league: 'eng', reponame: 'england' )
+  mirror( league: 'de',  reponame: 'deutschland' )
+  mirror( league: 'es',  reponame: 'espana' )
+  mirror( league: 'at',  reponame: 'austria' )
+  mirror( league: 'be',  reponame: 'belgium')
+
+  mirror( league: 'mx',  reponame: 'mexico')
+
+  ########
+  ## all-in-one world
+  ['it',   # Italy
+   'fr',   # France
+   'nl',   # Netherlands
+   'sco',  # Scotland
+   'br',   # Brazil
+   'cn',   # China
+  ].each do |league|
+    mirror( league: league, reponame: 'world' )
+  end
+
+  puts "mirror done"
 end
