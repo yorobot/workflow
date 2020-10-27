@@ -34,11 +34,11 @@ jobs:
         yo setup
 
     - name: Run ssh_clone
-      run:  yo clone
+      run:  yo -r ./boot.rb clone
 
     - name: Run lint
       run:  yo -r ./boot.rb lint
 
     - name: Run ssh_push
-      run:  yo push_logs
+      run:  yo -r ./boot.rb push_logs
 

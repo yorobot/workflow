@@ -26,46 +26,30 @@ jobs:
       with:
         ruby-version: '2.6' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
 
-    - name: setup/check ssh
-      shell: bash
+    - name: setup
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
-        if [ ! -d ~/.ssh ]; then mkdir ~/.ssh; fi
-        echo "$SSH_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        echo "ssh directory - ~/.ssh:"
-        ls -la ~/.ssh
-      #  ssh -vT git@github.com
-
-    - name: setup/check git
-      run: |
-        git --version
-        git config --global user.name  "Yo Robot"
-        git config --global user.email "gerald.bauer+yorobot@gmail.com"
-        git config -l --show-origin
-
-    - name: Run bundle install
-      run: |
         bundle install
-        gem list
-        gem env
+        # gem list
+        # gem env
+        yo setup
 
-    - name: Run setup / ssh_clone
-      run:  ruby ./setup.rb
+    - name: Run ssh_clone
+      run:  yo -r ./boot.rb clone
 
     - name: Run build (database)
-      run:  rake build
+      run:  yo -r ./boot.rb build
 
     - name: Show stats
-      run:  rake stats
+      run:  yo -r ./boot.rb stats
 
     - name: Run gen json
-      run:  rake json
+      run:  yo -r ./boot.rb json
 
     - name: Run gen csv
-      run:  rake mirror
+      run:  yo -r ./boot.rb mirror
 
     - name: Run ssh_push
-      run:  ruby ./push.rb   ## json, csv & logs
+      run:  yo -r ./boot.rb push     ## json, csv & logs
 

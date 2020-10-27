@@ -1,6 +1,27 @@
 # TODOs
 
 
+- [ ]  add starting step to flow-lite !!!
+       plus - step done in xx sec(s) or such - at the end!!!
+
+``` ruby
+       start_time = Time.now   ## todo: use Timer? t = Timer.start / stop / diff etc. - why? why not?
+
+       ...
+       end_time = Time.now
+       diff_time = end_time - start_time
+       puts "read_#{key}: done in #{diff_time} sec(s)"
+```
+
+
+
+- [ ]  check lint - logs get not saved to logs@yorobot ??? double check
+
+
+- [ ]  use LogFile.open( ) or such
+        to yorobot - why? why not?
+---
+
 lints to fix:
 
 italy

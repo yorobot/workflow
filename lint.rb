@@ -39,6 +39,7 @@ def lint( datasets )
     ## save
     # out_path = "#{path}/.build/conf.txt"
     out_path = Mono.real_path( "lint.#{key}.txt@yorobot/logs" )
+    puts "[lint] writing log to >#{out_path}<..."
     File.open( out_path , 'w:utf-8' ) do |f|
       f.write( buf )
     end
@@ -48,6 +49,8 @@ def lint( datasets )
   puts total_buf
 
   out_path = Mono.real_path( "lint.all.txt@yorobot/logs" )
+  puts "[lint] writing log to >#{out_path}<..."
+
   if total_errors > 0
     puts "#{total_errors} error(s) total; please fix"
 
