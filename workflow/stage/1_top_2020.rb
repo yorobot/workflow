@@ -1,13 +1,5 @@
-puts "pwd: #{Dir.pwd}"
-## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
-Mono.root = Dir.pwd
 
-Mono.walk  ## for debugging print / walk mono (source) tree
-
-
-
-
-$LOAD_PATH.unshift( Mono.real_path( 'yorobot/cache.csv/apis/lib' ))
+$LOAD_PATH.unshift( Mono.real_path( 'apis/lib@yorobot/cache.csv' ))
 require 'convert'
 
 ## todo/check:
@@ -50,8 +42,8 @@ pp DATASETS
 ## todo/fix: (re)use / move into
 ##     Footballdata::Tool.download( DATASETS ) !!!!
 ##    or Footballdata::Batch.download  or Job.download or ?????
-step [:download, :dl] do
-  DATASETS.each do |dataset|
+def download( datasets=DATASETS )
+  datasets.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
     seasons.each do |season|
@@ -63,10 +55,10 @@ end
 
 
 
-Footballdata.config.convert.out_dir = Mono.real_path( 'yorobot/stage/one' )
+Footballdata.config.convert.out_dir = Mono.real_path( 'stage/one@yorobot' )
 
-step :convert do
-  DATASETS.each do |dataset|
+def convert( datasets=DATASETS )
+  datasets.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
     seasons.each do |season|

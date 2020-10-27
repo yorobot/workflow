@@ -1,18 +1,11 @@
 
-puts "pwd: #{Dir.pwd}"
-## use working dir as root? or change to home dir ~/ or ~/mono - why? why not?
-Mono.root = Dir.pwd
-
-Mono.walk  ## for debugging print / walk mono (source) tree
-
-
 
 step :clone do
   #############
   ### "deep" standard/ regular clone
   [
-    'yorobot/logs',
-    'yorobot/stage',
+     "logs@yorobot",
+    "stage@yorobot",
   ].each do |repo|
     Mono.clone( repo )
   end
@@ -22,7 +15,7 @@ step :clone do
   ### shallow "fast clone" - support libraries
   ###  use https:// instead of ssh - why? why not?
   [
-    'yorobot/cache.csv',
+    "cache.csv@yorobot",
   ].each do |repo|
     Mono.clone( repo, depth: 1 )
   end
@@ -33,11 +26,26 @@ end
 step :push do
   msg = "auto-update week #{Date.today.cweek}"
 
-  Mono.open( 'yorobot/stage' ) do |proj|
+  Mono.open( "stage@yorobot" ) do |proj|
     if proj.changes?
-      proj.add( '.' )
+      proj.add( "." )
       proj.commit( msg )
       proj.push
     end
   end
 end
+
+
+
+####
+# note:   use yo --require NAME to pull in (auto-require) datasets config/setup
+
+step [:download, :dl] do
+  download( DATASETS )
+end
+
+step :convert do
+  convert( DATASETS )
+end
+
+

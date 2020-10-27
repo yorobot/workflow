@@ -33,17 +33,17 @@ jobs:
       run: |
         gem install nokogiri --no-document
         bundle install
-        yo -f ./workflow/stage/setup.rb setup
+        yo -f ./workflow/stage/Flowfile.rb setup
 
-    - name: Run setup / ssh_clone
-      run:  yo -f ./workflow/stage/setup.rb clone
+    - name: Run ssh_clone
+      run:  yo -f ./workflow/stage/Flowfile.rb clone
 
     - name: Run download
-      run:  yo -f ./workflow/stage/2_top_2020.rb download
+      run:  yo -r ./workflow/stage/2_top_2020.rb -f ./workflow/stage/Flowfile.rb download
 
     - name: Run convert
-      run:  yo -f ./workflow/stage/2_top_2020.rb convert
+      run:  yo -r ./workflow/stage/2_top_2020.rb -f ./workflow/stage/Flowfile.rb convert
 
     - name: Run ssh_push
-      run:  yo -f ./workflow/stage/setup.rb push
+      run:  yo -f ./workflow/stage/Flwofile.rb push
 
