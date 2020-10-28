@@ -14,7 +14,9 @@ end
 require "sportdb/readers"
 
 $LOAD_PATH.unshift( Mono.real_path( "sportdb-exporters/lib@yorobot/sport.db.more" ))
+puts "path=>#{Mono.real_path('sportdb-exporters/lib@yorobot/sport.db.more')}<"
 require "sportdb/exporters"
+
 
 ## use (switch to) latest "external" datasets
 SportDb::Import.config.leagues_dir = Mono.real_path( "leagues@openfootball" )
@@ -25,6 +27,7 @@ SportDb::Import.config.clubs_dir   = Mono.real_path( "clubs@openfootball" )
 #####################
 ## note: for now setup lint machinery "on demand"
 $LOAD_PATH.unshift( Mono.real_path( "sportdb-linters/lib@yorobot/sport.db.more" ))
+puts "path=>#{Mono.real_path('sportdb-linters/lib@yorobot/sport.db.more'}"
 require 'sportdb/linters'
 
 
@@ -52,7 +55,7 @@ def connect
   logger = LogUtils::Logger.root
   ## log all warns, errors, fatals to db
   LogDb.setup
-  logger.warn "Rakefile - #{Time.now}"  # say hello; log to db (warn level min)
+  logger.warn "connect - #{Time.now}"  # say hello; log to db (warn level min)
   ## use DEBUG=t or DEBUG=f
   logger.level =  :debug     # :info
 end
@@ -67,7 +70,7 @@ def build( datasets=DATASETS )
   logger = LogUtils::Logger.root
   ## log all warns, errors, fatals to db
   LogDb.setup
-  logger.warn "Rakefile - #{Time.now}"  # say hello; log to db (warn level min)
+  logger.warn "build - #{Time.now}"  # say hello; log to db (warn level min)
   ## use DEBUG=t or DEBUG=f
   logger.level =  :debug     # :info
 

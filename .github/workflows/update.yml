@@ -35,8 +35,10 @@ jobs:
         # gem env
         yo setup
 
+
+    ## note: only (auto-)require config.rb (and NOT boot.rb) for clone/push
     - name: Run ssh_clone
-      run:  yo -r ./boot.rb clone
+      run:  yo -r ./config.rb clone
 
     - name: Run build (database)
       run:  yo -r ./boot.rb build
@@ -51,5 +53,5 @@ jobs:
       run:  yo -r ./boot.rb mirror
 
     - name: Run ssh_push
-      run:  yo -r ./boot.rb push     ## json, csv & logs
+      run:  yo -r ./config.rb push     ## json, csv & logs
 

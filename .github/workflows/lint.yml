@@ -33,12 +33,13 @@ jobs:
         bundle install
         yo setup
 
+    ## note: only (auto-)require config.rb (and NOT boot.rb) for clone/push
     - name: Run ssh_clone
-      run:  yo -r ./boot.rb clone
+      run:  yo -r ./config.rb clone
 
     - name: Run lint
       run:  yo -r ./boot.rb lint
 
     - name: Run ssh_push
-      run:  yo -r ./boot.rb push_logs
+      run:  yo -r ./config.rb push_logs
 
