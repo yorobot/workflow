@@ -27,7 +27,7 @@ SportDb::Import.config.clubs_dir   = Mono.real_path( "clubs@openfootball" )
 #####################
 ## note: for now setup lint machinery "on demand"
 $LOAD_PATH.unshift( Mono.real_path( "sportdb-linters/lib@yorobot/sport.db.more" ))
-puts "path=>#{Mono.real_path('sportdb-linters/lib@yorobot/sport.db.more'}"
+puts "path=>#{Mono.real_path('sportdb-linters/lib@yorobot/sport.db.more')}<"
 require 'sportdb/linters'
 
 
