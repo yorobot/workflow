@@ -1,14 +1,14 @@
 #############
 #  clone
 
-step :clone do
+step [:sync, :clone] do
   #############
   ### "deep" standard/ regular clone
   [
              'logs@yorobot',
     'football.json@openfootball',
   ].each do |repo|
-    Mono.clone( repo )
+    Mono.sync( repo )
   end
 
   ######
@@ -17,7 +17,7 @@ step :clone do
   [
     'sport.db.more@yorobot',
   ].each do |repo|
-    Mono.clone( repo, depth: 1 )
+    Mono.sync( repo )    ## was: Mono.clone( repo, depth: 1 )
   end
 
 
@@ -41,7 +41,7 @@ step :clone do
             'clubs',
            ]
   names.each do |name|
-    Mono.clone( "#{name}@openfootball", depth: 1 )
+    Mono.sync( "#{name}@openfootball" )  ## was: Mono.clone( "#{name}@openfootball", depth: 1 )
   end
 
 
@@ -51,9 +51,10 @@ step :clone do
   pp names
 
   names.each do |name|
-    Mono.clone( "#{name}@footballcsv" )
+    Mono.sync( "#{name}@footballcsv" )
   end
 end
+
 
 
 
@@ -63,12 +64,14 @@ end
 step :push_logs do
   msg  = "auto-update week #{Date.today.cweek}"
 
-  puts "check for changes in >#{Mono.real_path('logs@yorobot')}<..."
   Mono.open( 'logs@yorobot' ) do |proj|
+    puts "check for changes in >#{Dir.pwd}<..."
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
       proj.push
+    else
+      puts '  - no changes -'
     end
   end
 end
@@ -77,12 +80,14 @@ end
 step :push_json do
   msg  = "auto-update week #{Date.today.cweek}"
 
-  puts "check for changes in >#{Mono.real_path('football.json@openfootball')}<..."
   Mono.open( 'football.json@openfootball' ) do |proj|
+    puts "check for changes in >#{Dir.pwd}<..."
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )
       proj.push
+    else
+      puts '  - no changes -'
     end
   end
 end
@@ -98,14 +103,14 @@ step :push_csv do
   pp names
 
   names.each do |name|
-    path = Mono.real_path( "#{name}@footballcsv" )
-    puts "check for changes in >#{path}<..."
-
     Mono.open( "#{name}@footballcsv" ) do |proj|
+      puts "check for changes in >#{Dir.pwd}<..."
       if proj.changes?
         proj.add( '.' )
         proj.commit( msg )
         proj.push
+      else
+        puts '  - no changes -'
       end
     end
   end

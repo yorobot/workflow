@@ -13,21 +13,19 @@ end
 
 require "sportdb/readers"
 
-$LOAD_PATH.unshift( Mono.real_path( "sportdb-exporters/lib@yorobot/sport.db.more" ))
-puts "path=>#{Mono.real_path('sportdb-exporters/lib@yorobot/sport.db.more')}<"
+$LOAD_PATH.unshift( Monopath.real_path( "sportdb-exporters/lib@yorobot/sport.db.more" ))
 require "sportdb/exporters"
 
 
 ## use (switch to) latest "external" datasets
-SportDb::Import.config.leagues_dir = Mono.real_path( "leagues@openfootball" )
-SportDb::Import.config.clubs_dir   = Mono.real_path( "clubs@openfootball" )
+SportDb::Import.config.leagues_dir = Mononame.real_path( "leagues@openfootball" )
+SportDb::Import.config.clubs_dir   = Mononame.real_path( "clubs@openfootball" )
 
 
 
 #####################
 ## note: for now setup lint machinery "on demand"
-$LOAD_PATH.unshift( Mono.real_path( "sportdb-linters/lib@yorobot/sport.db.more" ))
-puts "path=>#{Mono.real_path('sportdb-linters/lib@yorobot/sport.db.more')}<"
+$LOAD_PATH.unshift( Monopath.real_path( "sportdb-linters/lib@yorobot/sport.db.more" ))
 require 'sportdb/linters'
 
 
@@ -80,7 +78,7 @@ def build( datasets=DATASETS )
 
        ## SportDb.read( h[:path] )
        ## note: only incl. latest season for now
-       SportDb.read( Mono.real_path( "#{h[:name]}@openfootball"), season: SEASON_LATEST )
+       SportDb.read( Mononame.real_path( "#{h[:name]}@openfootball"), season: SEASON_LATEST )
 
        end_time = Time.now
        diff_time = end_time - start_time

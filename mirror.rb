@@ -119,7 +119,7 @@ SportDb::Model::Event.order( :id ).each do |event|
 
   ## path = "./o/#{season_path}/#{basename}.csv"
   ## path = "../../footballcsv/#{reponame}/#{season_path}/#{basename}.csv"
-  path = Mono.real_path( "#{season_path}/#{basename}.csv@footballcsv/#{reponame}" )
+  path = Monopath.real_path( "#{season_path}/#{basename}.csv@footballcsv/#{reponame}" )
   puts "  path=>#{path}<"
   ## puts "     #{recs.size} records"
 

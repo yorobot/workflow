@@ -26,20 +26,20 @@ jobs:
       with:
         ruby-version: '2.6' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
 
-    - name: setup
+    - name: Run install / adduser
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         bundle install
-        yo setup
+        yo adduser
 
     ## note: only (auto-)require config.rb (and NOT boot.rb) for clone/push
     - name: Run ssh_clone
-      run:  yo -r ./config.rb clone
+      run:  yo clone
 
     - name: Run lint
       run:  yo -r ./boot.rb lint
 
     - name: Run ssh_push
-      run:  yo -r ./config.rb push_logs
+      run:  yo push_logs
 
