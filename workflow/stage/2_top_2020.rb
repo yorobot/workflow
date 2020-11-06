@@ -1,6 +1,6 @@
 
 
-$LOAD_PATH.unshift( Mono.real_path( 'cache.weltfussball/lib@yorobot/cache.csv' ))
+$LOAD_PATH.unshift( Monopath.real_path( 'cache.weltfussball/lib@yorobot/cache.csv' ))
 require 'convert'
 
 

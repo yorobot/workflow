@@ -1,5 +1,5 @@
 
-$LOAD_PATH.unshift( Mono.real_path( 'apis/lib@yorobot/cache.csv' ))
+$LOAD_PATH.unshift( Monopath.real_path( 'apis/lib@yorobot/cache.csv' ))
 require 'convert'
 
 ## todo/check:

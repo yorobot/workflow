@@ -1,13 +1,13 @@
 
 
-step :clone do
+step [:sync, :clone] do
   #############
   ### "deep" standard/ regular clone
   [
      "logs@yorobot",
     "stage@yorobot",
   ].each do |repo|
-    Mono.clone( repo )
+    Mono.sync( repo )
   end
 
 
@@ -17,20 +17,23 @@ step :clone do
   [
     "cache.csv@yorobot",
   ].each do |repo|
-    Mono.clone( repo, depth: 1 )
+    Mono.sync( repo )  # was: Mono.clone( repo, depth: 1 )
   end
 end
 
 
 
-step :push do
+step [:publish, :pub, :push] do
   msg = "auto-update week #{Date.today.cweek}"
 
   Mono.open( "stage@yorobot" ) do |proj|
+    puts "check for changes in >#{Dir.pwd}<..."
     if proj.changes?
       proj.add( "." )
       proj.commit( msg )
       proj.push
+    else
+      puts '  - no changes -'
     end
   end
 end

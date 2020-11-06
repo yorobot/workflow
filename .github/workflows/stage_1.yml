@@ -27,12 +27,12 @@ jobs:
       with:
         ruby-version: '2.6' # Version range or exact version of a Ruby version to use, using semvers version range syntax.
 
-    - name: setup
+    - name: Run install / adduser
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         bundle install
-        yo -f ./workflow/stage/Flowfile.rb setup
+        yo -f ./workflow/stage/Flowfile.rb adduser
 
     - name: Run ssh_clone
       run:  yo -f ./workflow/stage/Flowfile.rb clone
