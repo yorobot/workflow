@@ -45,5 +45,5 @@ jobs:
       run:  yo -r ./workflow/stage/2_top_2020.rb -f ./workflow/stage/Flowfile.rb convert
 
     - name: Run ssh_push
-      run:  yo -f ./workflow/stage/Flwofile.rb push
+      run:  yo -f ./workflow/stage/Flowfile.rb push
 
