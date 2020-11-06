@@ -63,7 +63,7 @@ def download( datasets=DATASETS )
 end
 
 
-Worldfootball.config.convert.out_dir = Mono.real_path( 'stage/two@yorobot' )
+Worldfootball.config.convert.out_dir = Monopath.real_path( 'stage/two@yorobot' )
 
 def convert( datasets=DATASETS )
   datasets.each do |dataset|

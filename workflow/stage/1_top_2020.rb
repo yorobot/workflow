@@ -55,7 +55,7 @@ end
 
 
 
-Footballdata.config.convert.out_dir = Mono.real_path( 'stage/one@yorobot' )
+Footballdata.config.convert.out_dir = Monopath.real_path( 'stage/one@yorobot' )
 
 def convert( datasets=DATASETS )
   datasets.each do |dataset|
