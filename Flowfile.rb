@@ -6,7 +6,6 @@ step [:sync, :clone] do
   ### "deep" standard/ regular clone
   [
              'logs@yorobot',
-    'football.json@openfootball',
   ].each do |repo|
     Mono.sync( repo )
   end
@@ -77,22 +76,6 @@ step :push_logs do
 end
 
 
-step :push_json do
-  msg  = "auto-update week #{Date.today.cweek}"
-
-  Mono.open( 'football.json@openfootball' ) do |proj|
-    puts "check for changes in >#{Dir.pwd}<..."
-    if proj.changes?
-      proj.add( '.' )
-      proj.commit( msg )
-      proj.push
-    else
-      puts '  - no changes -'
-    end
-  end
-end
-
-
 step :push_csv do
   msg  = "auto-update week #{Date.today.cweek}"
   names = DATASETS_CSV.map { |key,h| h[:name] }
@@ -117,11 +100,9 @@ step :push_csv do
 end
 
 step :push do
-   step :push_json
    step :push_csv
    step :push_logs
    ##
-   # or step_push_json
    # or step_push_csv
    # or step_push_logs
 end
@@ -187,80 +168,3 @@ step :mirror do
 
   puts "mirror done"
 end
-
-
-
-##  used by json export/generate task
-# FOOTBALL_JSON_DIR =  "./football.json"
-
-step :json do
-  # was task :json => :config
-  connect
-
-  [
-    'at.1',  # Austria
-    'at.2',
-    'at.cup',
-
-    'de.1',  # Germany • Deutschland
-    'de.2',
-    'de.3',
-    'de.cup',
-
-    'eng.1',  # England
-    'eng.2',
-    'eng.3',
-    'eng.4',
-
-    'es.1',  # Spain • España
-    'es.2',
-
-    'it.1',  # Italy
-    'it.2',
-
-    ## from europe/ datasets
-    'fr.1',  # France
-    'fr.2',
-
-    'sco.1', # Scotland
-
-    'nl.1',  # Netherlands
-    'be.1',  # Belgium
-    'pt.1',  # Portugal
-
-    'ch.1',  # Switzerland
-    'ch.2',
-
-    'cz.1',  # Czech Republic
-    'hu.1',  # Hungary
-
-    'gr.1',  # Greece
-    'tr.1',  # Turkey
-    'tr.2',
-
-    'ru.1',  # Russia
-    'ru.2',
-
-    ## from south-america/ datasets
-    'ar.1',  # Argentina
-    'br.1',  # Brazil
-
-    ## from world/ datasets
-    'cn.1',  # China
-    'jp.1',  # Japan
-    'au.1',  # Australia
-
-    ###################
-    ## more
-    'mx.1',  # Mexico
-
-    #########
-    ## clubs int'l  (incl. group/group phase)
-    'uefa.cl.quali',   # Champions League Quali(fications)
-    'uefa.cl',         # Champions League
-  ].each do |league|
-    SportDb::JsonExporter.export( league, out_root: Mono.real_path( 'football.json@openfootball' ))
-  end
-end
-
-
