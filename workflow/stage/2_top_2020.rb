@@ -1,7 +1,7 @@
 
-
-$LOAD_PATH.unshift( Monopath.real_path( 'cache.weltfussball/lib@yorobot/cache.csv' ))
-require 'convert'
+$LOAD_PATH.unshift( Monopath.real_path( 'webget-football@yorobot/sport.db.more' ))
+$LOAD_PATH.unshift( Monopath.real_path( 'football-sources@yorobot/sport.db.more' ))
+require 'football/sources'
 
 
 Webget.config.sleep = 3

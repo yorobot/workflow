@@ -15,7 +15,7 @@ step [:sync, :clone] do
   ### shallow "fast clone" - support libraries
   ###  use https:// instead of ssh - why? why not?
   [
-    "cache.csv@yorobot",
+    "sport.db.more@yorobot",
   ].each do |repo|
     Mono.sync( repo )  # was: Mono.clone( repo, depth: 1 )
   end
