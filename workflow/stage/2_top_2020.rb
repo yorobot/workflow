@@ -1,6 +1,6 @@
 
-$LOAD_PATH.unshift( Monopath.real_path( 'webget-football@yorobot/sport.db.more' ))
-$LOAD_PATH.unshift( Monopath.real_path( 'football-sources@yorobot/sport.db.more' ))
+$LOAD_PATH.unshift( Monopath.real_path( 'webget-football/lib@yorobot/sport.db.more' ))
+$LOAD_PATH.unshift( Monopath.real_path( 'football-sources/lib@yorobot/sport.db.more' ))
 require 'football/sources'
 
 
