@@ -43,7 +43,7 @@ pp DATASETS
 ## todo/fix: (re)use / move into
 ##     Footballdata::Tool.download( DATASETS ) !!!!
 ##    or Footballdata::Batch.download  or Job.download or ?????
-def download( datasets=DATASETS )
+def download( datasets )
   datasets.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
@@ -58,7 +58,7 @@ end
 
 Footballdata.config.convert.out_dir = Monopath.real_path( 'stage/one@yorobot' )
 
-def convert( datasets=DATASETS )
+def convert( datasets )
   datasets.each do |dataset|
     league  = dataset[0]
     seasons = dataset[1]
